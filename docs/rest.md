@@ -11,23 +11,23 @@ Els recursos són entitats d'informació que es poden accedir o manipular a trav
 ### Métodes HTTP
 Utilitza 4 métodes estandars per realitzar les operacions en els recursos:
 
-**GET**: Recupera un recurs.
+**GET**: Recupera un informació pel client.
 
-**POST**: Crea un recurs.
+**POST**: Crea un recurs dins del servidor. (Agregar un registre a la base de dades)
 
-**PUT**: Actualiza un recurs.
+**PUT**: Actualiza un recurs ja extistent dins del servidor. 
 
 **DELETE**: Elimina un recurs.
 
 ### Representaciones
-Els recursos poden estar en diversos formats, com _JSON_, _XML_ o _HTML_.  
+Els recursos poden estar en diversos formats, com _JSON_ o _XML_.  
 
 El client podrà especificar el format mitjançant la clau _Accept_ i contingut _application/{format}_ a l'encapçalat
 
 ### Estat de l'Aplicació
 Cada solicitud ha de ser independent i no ha de guardar-se l'estat al servidor, per tant, cada solicitud ha de contenir tota la informació necessaria per ser processada
 
-
+<!-- 
 ## Implementación de REST con Node.js y Express
 Node.js y Express son tecnologías populares para crear servicios web RESTful. A continuación, se muestra cómo implementar un CRUD básico utilizando estas tecnologías:
 
@@ -37,7 +37,7 @@ Definición de rutas: En Express, se definen las rutas para cada operación CRUD
 
 Manejo de solicitudes y respuestas: Se implementan controladores para manejar las solicitudes HTTP y realizar operaciones en la base de datos.
 
-Interacción con la base de datos: Se utiliza un ORM (Object-Relational Mapping) o una librería para interactuar con la base de datos y realizar las operaciones CRUD en los recursos.
+Interacción con la base de datos: Se utiliza un ORM (Object-Relational Mapping) o una librería para interactuar con la base de datos y realizar las operaciones CRUD en los recursos. -->
 
 # Ejercicio Práctico
 Para comprender mejor el funcionamiento de REST con Node.js y Express, se propone el siguiente ejercicio:
