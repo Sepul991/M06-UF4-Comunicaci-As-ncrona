@@ -7,6 +7,3 @@ Hacer un commit de los cambios:
 Subir los cambios al repositorio remoto en GitHub:
 - git push --all
 
-
-
-POL POLICARPIO 
