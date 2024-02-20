@@ -93,7 +93,7 @@ fetch("/robots.txt", options)
 |OBJECT body         | Cuerpo de la petición HTTP. Puede ser de varios tipos: String, FormData, Blob, etc... |
 |STRING credentials  | Modo de credenciales. Por defecto, omit. Otras opciones: same-origin e include.   |
 
-Lo primero, y más habitual, suele ser indicar el método HTTP a realizar en la petición. Por defecto, se realizará un GET, pero podemos cambiarlos a HEAD, POST, PUT o cualquier otro tipo de método. En segundo lugar, podemos indicar objetos para enviar en el body de la petición, así como modificar las cabeceras en el campo headers:
+Lo primero, y más habitual, suele ser indicar el método HTTP a realizar en la petición. Por defecto, se realizará un GET, pero podemos cambiarlos a HEAD, POST, PUT o cualquier otro tipo de método. En segundo lugar, podemos indicar objetos para enviar en el body de la petición, así como modificar las cabeceras en el campo headers (**lo veremos mas adelante**):
 
 ````JAVASCRIPT
 const options = {
@@ -107,11 +107,86 @@ const options = {
 En este ejemplo, estamos enviando una petición POST, indicando en la cabecera que se envía contenido JSON y en el cuerpo de los datos, enviando el objeto jsonData, codificado como texto mediante stringify().
 
 Por último, el campo credentials permite modificar el modo en el que se realiza la petición. Por defecto, el valor omit hace que no se incluyan credenciales en la petición, pero es posible indicar los valores same-origin, que incluye las credenciales si estamos sobre el mismo dominio, o include que incluye las credenciales incluso en peticiones a otros dominios.
-- Ejemplos de cómo usar estos parámetros en las peticiones Fetch.
+
+- omit: Este es el valor predeterminado si no se especifica el campo credentials. Significa que no se incluirán credenciales en la solicitud, independientemente del origen.
+
+- same-origin: Indica que las credenciales se incluirán en la solicitud si el origen de la solicitud y el origen del recurso solicitado son el mismo. Es decir, si la solicitud se hace dentro del mismo dominio.
+
+- include: Este valor indica que las credenciales se incluirán en todas las solicitudes, incluso en las peticiones a otros dominios. Esto puede ser útil en situaciones de autenticación cruzada (CORS) cuando se necesita pasar credenciales a un servidor diferente del origen.
+
+````javascript
+fetch('https://api.example.com/data', {
+  credentials: 'same-origin', // o 'include' según sea necesario
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+````
+## Métodos
+
+````javascript
+| Método                              | Descripción                                                  |
+|-------------------------------------|--------------------------------------------------------------|
+| BOOLEAN.has(STRING name)            | Comprueba si la cabecera `name` está definida.               |
+| STRING.get(STRINGname)              | Obtiene el valor de la cabecera `name`.                      |
+| .set(STRINGname, STRINGvalue)       | Establece o modifica el valor `value` a la cabecera `name`.  |
+| .append(STRING name, STRING value)  | Añade un nuevo valor `value` a la cabecera `name`.           |
+| .delete(STRING name)                | Elimina la cabecera `name`.                                  |
+
+````
 
 # 3. Manejo de Respuestas
-- Explicación de cómo manejar las respuestas obtenidas de Fetch.
-- Descripción de cómo extraer datos de la respuesta usando métodos como json(), text(), blob(), etc.
+- **Cómo manejar las respuestas obtenidas de Fetch.:**
+  
+  Al hacer una solicitud Fetch en JavaScript, puedes manejar la respuesta obtenida de varias maneras utilizando diferentes métodos proporcionados por el objeto Response.
+  Por el lado de las propiedades, tenemos las siguientes:
+````javascript
+| Propiedad   | Descripción                                                   |
+|-------------|---------------------------------------------------------------|
+| NUMBER .status     | Código de error HTTP de la respuesta (100-599).               |
+| STRING .statusText | Texto representativo del código de error HTTP anterior.      |
+| BOOLEAN .ok         | Devuelve true si el código HTTP es 200 (o empieza por 2).    |
+| OBJECT .headers    | Cabeceras de la respuesta.                                    |
+| STRING .url        | URL de la petición HTTP.                                      |
+
+````
+Las propiedades .status y statusText nos devuelven el código de error HTTP de la respuesta en formato numérico y cadena de texto respectivamente.
+
+Sin embargo, existe una novedad respecto a XHR, y es que tenemos una propiedad .ok que nos devuelve true si el código de error de la respuesta es un valor del rango 2xx, es decir, que todo ha ido correctamente. Así pues, tenemos una forma práctica y sencilla de comprobar si todo ha ido bien al realizar la petición.
+
+Por último, tenemos la propiedad .headers que nos devuelve las cabeceras de la respuesta y la propiedad .url que nos devuelve la URL completa de la petición que hemos realizado.
+
+**Por otra parte, la instancia response también tiene algunos métodos interesantes, la mayoría de ellos para procesar mediante una promesa los datos recibidos y facilitar el trabajo con ellos:**
+
+````javascript
+| Método          | Descripción                                                            |
+|-----------------|------------------------------------------------------------------------|
+| STRING.text()         | Devuelve una promesa con el texto plano de la respuesta.              |
+| OBJECT.json()         | Idem, pero con un objeto json. Equivale a usar JSON.parse().          |
+| OBJECT.blob()         | Idem, pero con un objeto Blob (binary large object).                  |
+| OBJECT.arrayBuffer()  | Idem, pero con un objeto ArrayBuffer (buffer binario puro).           |
+|OBJECT .formData()     | Idem, pero con un objeto FormData (datos de formulario).               |
+| OBJECT.clone()        | Crea y devuelve un clon de la instancia en cuestión.                  |
+|OBJECT Response.error()| Devuelve un nuevo objeto Response con un error de red asociado.       |
+|OBJECT Response.redirect(url, code) | Redirige a una url, opcionalmente con un code de error.           |
+
+````
+
+**Ejemplo**:
+````javascript
+fetch("/contents.json")
+  .then(response => response.text())
+  .then(data => {
+    const json = JSON.parse(data);
+    console.log(json);
+  });
+  (utilizando .json() no haría falta parsearlo)
+````
+
 - Ejemplos de cómo utilizar estos métodos para obtener y manipular datos de la respuesta.
 
 # 4. Headers y Opciones de Configuración
@@ -132,12 +207,5 @@ Por último, el campo credentials permite modificar el modo en el que se realiza
 - Ejemplos de casos de uso comunes de Fetch en aplicaciones web modernas.
 - Ejemplos de cómo utilizar Fetch en situaciones más complejas, como la autenticación de usuarios, el manejo de archivos grandes, etc.
 
-# 8. Comparación con Otras Tecnologías
-- Comparación de Fetch con otras tecnologías de peticiones HTTP en JavaScript, como XMLHttpRequest.
-- Discusión sobre las ventajas y desventajas de Fetch en comparación con estas tecnologías.
-
-# 9. Recursos Adicionales y Referencias
-- Lista de enlaces a documentación oficial, tutoriales, artículos y otras fuentes de información sobre Fetch.
-- Recomendaciones sobre dónde encontrar más recursos para aprender sobre Fetch y peticiones HTTP en JavaScript.
 
 # 10. Conclusión
