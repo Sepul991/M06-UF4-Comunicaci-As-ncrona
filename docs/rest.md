@@ -76,5 +76,5 @@ Familiaritzar-se amb les solicituds HTTP GET, POST, PUT i DELETE utilitzant Node
 ## Eines
 - **Aplicacions**: Per tal de poder realitzar aquest exercici s'haurà de fer ús d'un dels plugins esmentats anteriorment, o de les seves respectives aplicacions.
 
-- **API**: la API necessaria per poder dur a terme els exercicis és la seguent:
+- **API**: la API necessaria per poder dur a terme els exercicis és la següent:
 	https://jsonplaceholder.typicode.com/posts/
