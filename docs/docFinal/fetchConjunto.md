@@ -169,7 +169,7 @@ La instancia response también tiene algunos métodos interesantes, la mayoría 
 |OBJECT Response.redirect(url, code) | Redirige a una url, opcionalmente con un code de error.           |
 
 
-# 2. Async/Await
+# 5. Async/Await
 ASYNC/AWAIT es una característica de JavaScript que simplifica la escritura y lectura de código asíncrono. 
 
 Cuando se marca una función con la palabra clave async, esta función se vuelve asíncrona y devuelve una promesa. Dentro de esta función asíncrona, se puede utilizar la palabra clave await antes de una llamada a una función asíncrona para esperar a que esa función se complete y devuelva un resultado antes de continuar con la ejecución del código.
