@@ -78,7 +78,6 @@ Para instalar express hay que abrir una consola en la ruta del proyecto y ejecut
       }
       const connection = await mysql.createConnection(config);
     `````
-
 - Primero importar la dependencia
 - Luego declarar un objeto con la configuracion para la conexion
 - Por ultimo ejecutar el metodo createConnection 
@@ -91,6 +90,21 @@ El metodo query nos permite hacer querys en la base de datos, en este caso un se
         res.json(usuarios);
     }else{
         res.status(404).json({message:'Usuarios no encontrados'})
+    }
+    })
+  `````
+## **Capturar parametros de la url** 
+Para capturar cualquier parametro, al pasar la url a los metodos de express hay que especificar con : antes por ejemplo /usuarios/:id,
+y luego con el req.params podemos recuperar el dato con el nombre que le pusimos 
+ `````javascript
+     app.get('/usuarios:id',async (req,res)=>{
+    const { id } = req.params;
+    const usuarios = await connection.query('SELECT * FROM usuarios')
+    const usuario = usuarios.find(usuario => usuario.id = id)
+    if(usuario){
+        res.json(usuario);
+    }else{
+        res.status(404).json({message:'Usuario no encontrado'})
     }
     })
   `````
