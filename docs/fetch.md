@@ -187,25 +187,41 @@ fetch("/contents.json")
   (utilizando .json() no haría falta parsearlo)
 ````
 
-- Ejemplos de cómo utilizar estos métodos para obtener y manipular datos de la respuesta.
+## Enunciado del ejercicio:
 
-# 4. Headers y Opciones de Configuración
-- Detalles sobre cómo configurar headers personalizados en las peticiones Fetch.
-- Explicación de otras opciones de configuración disponibles, como mode, credentials, cache, etc.
-- Ejemplos de cómo utilizar estas opciones en las peticiones Fetch.
+Utilizando la API pública "JSONPlaceholder" (https://jsonplaceholder.typicode.com), tu tarea es obtener la lista de usuarios y mostrarla en la consola del navegador. Debes utilizar la función fetch para realizar la solicitud a la API y manejar la respuesta para mostrar los datos en la consola.
 
-# 5. Gestión de Errores
-- Discusión sobre cómo manejar errores en las peticiones Fetch.
-- Ejemplos de cómo verificar el estado de la respuesta y lanzar errores en caso de que la petición no tenga éxito.
-- Recomendaciones sobre las mejores prácticas para manejar errores en Fetch.
+Solución del ejercicio:
 
-# 6. Cross-Origin Resource Sharing (CORS)
-- Explicación de qué es CORS y cómo afecta a las peticiones Fetch.
-- Detalles sobre cómo configurar CORS en el servidor y cómo trabajar con las restricciones CORS en el cliente.
+````javascript
+// Utilizamos la función fetch para obtener los datos de la API de JSONPlaceholder
+fetch('https://jsonplaceholder.typicode.com/users')
+  // Manejamos la respuesta obtenida de la API
+  .then(response => {
+    // Verificamos si la respuesta fue exitosa (código de estado 200)
+    if (!response.ok) {
+      throw new Error('Hubo un problema al obtener los datos.');
+    }
+    // Convertimos la respuesta a formato JSON y la retornamos
+    return response.json();
+  })
+  // Manejamos los datos obtenidos en formato JSON
+  .then(data => {
+    // Mostramos los datos en la consola
+    console.log('Lista de usuarios:');
+    console.log(data);
+  })
+  // Capturamos cualquier error que pueda ocurrir durante el proceso
+  .catch(error => {
+    // Mostramos el error en la consola
+    console.error('Error:', error);
+  });
 
-# 7. Casos de Uso y Ejemplos Avanzados
-- Ejemplos de casos de uso comunes de Fetch en aplicaciones web modernas.
-- Ejemplos de cómo utilizar Fetch en situaciones más complejas, como la autenticación de usuarios, el manejo de archivos grandes, etc.
+````
 
+**Explicación:**
 
-# 10. Conclusión
+Utilizamos la función fetch para hacer una solicitud GET a la URL de la API de JSONPlaceholder que nos proporciona la lista de usuarios.
+Utilizamos el método .then() para manejar la respuesta obtenida de la API. En este método, verificamos si la respuesta fue exitosa y convertimos la respuesta a formato JSON utilizando el método .json().
+Utilizamos otro método .then() para manejar los datos obtenidos en formato JSON. En este método, simplemente mostramos los datos en la consola del navegador.
+Utilizamos el método .catch() para capturar cualquier error que pueda ocurrir durante el proceso de solicitud y manejo de datos, y lo mostramos en la consola.
