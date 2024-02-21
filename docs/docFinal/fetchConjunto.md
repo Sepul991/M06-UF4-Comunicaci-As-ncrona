@@ -136,6 +136,11 @@ app.listen(3000, () => {
 
 ````
 
+## 3.1 CORS en entornos de desarrollo
+Otra opción sencilla y rápida para no tener que lidiar con CORS temporalmente es la de instalar la extensión Allow CORS, disponible tanto Allow CORS para Chrome como Allow CORS para Firefox. Esta extensión deshabilita la política CORS mientras está instalada y activada.
+
+Esta elección es equivalente a que todas las respuestas a las peticiones asíncronas realizadas tengan la mencionada cabecera con el valor *. Obviamente, es importante recalcar que es una opción que sólo nos funcionará en nuestro equipo y navegador, pero puede ser muy práctica para simplificar el trabajo en desarrollo.
+
 # 4.PROMESAS
 
 En el primer .then() tenemos un objeto response. Se trata de la respuesta que nos llega del servidor web al momento de recibir nuestra petición:
