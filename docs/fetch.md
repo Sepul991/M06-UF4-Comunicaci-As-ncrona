@@ -225,3 +225,18 @@ Utilizamos la función fetch para hacer una solicitud GET a la URL de la API de 
 Utilizamos el método .then() para manejar la respuesta obtenida de la API. En este método, verificamos si la respuesta fue exitosa y convertimos la respuesta a formato JSON utilizando el método .json().
 Utilizamos otro método .then() para manejar los datos obtenidos en formato JSON. En este método, simplemente mostramos los datos en la consola del navegador.
 Utilizamos el método .catch() para capturar cualquier error que pueda ocurrir durante el proceso de solicitud y manejo de datos, y lo mostramos en la consola.
+
+
+## RESUMEN:
+
+**fetch paso a paso:**
+
+Solicitud HTTP: Cuando llamas a fetch, debes proporcionar la URL del recurso al que deseas acceder y, opcionalmente, un objeto de opciones que incluya configuraciones como el método HTTP a utilizar, encabezados personalizados, y más.
+
+Promesa devuelta: fetch devuelve una promesa. Esto significa que la solicitud se realiza de forma asíncrona y puedes encadenar métodos .then() y .catch() para manejar la respuesta o cualquier error que pueda ocurrir durante el proceso.
+
+Manejo de la respuesta: Una vez que la solicitud se completa y la respuesta está disponible, la promesa se resuelve. Puedes encadenar un método .then() a la promesa devuelta por fetch para manejar la respuesta. Dentro de este método .then(), puedes verificar si la respuesta fue exitosa (código de estado 200-299) o no y realizar las acciones necesarias en consecuencia.
+
+Conversiones de datos: Después de verificar que la respuesta es exitosa, puedes convertir los datos de la respuesta a diferentes formatos, como JSON, texto, o blobs, según el tipo de datos que estés esperando. Esto se hace generalmente utilizando los métodos proporcionados por la propia respuesta (response.json(), response.text(), response.blob(), etc.).
+
+Manejo de errores: Si la solicitud no se puede completar correctamente, como en el caso de un error de red o un código de estado de error en la respuesta (por ejemplo, 404 Not Found), la promesa se rechazará. Puedes encadenar un método .catch() para manejar estos errores y tomar medidas apropiadas, como mostrar un mensaje de error al usuario o intentar la solicitud nuevamente.
