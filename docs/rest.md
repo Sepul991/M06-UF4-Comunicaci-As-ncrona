@@ -38,42 +38,6 @@ Són les respostes que dona la pàgina per informar sobre el resultat de l'opera
 - **404** - Not Found
 - **500** - Internal Server Error
 
-## Exemples de solicituds HTTP
-####  GET
-```bash
-GET /api/users
-```
-
-```bash
-GET /api/users/{id}
-```
-####  POST
-```bash
-POST /api/users
-Content-Type: application/json
-
-{
-  "nombre": "Example",
-  "email": "ejemplo@example.com",
-  "edad": 30
-}
-```
-####  PUT
-```bash
-POST /api/users/{id}
-Content-Type: application/json
-
-{
-  "nombre": "Example",
-  "email": "ejemplo@example.com",
-  "edad": 30
-}
-```
-####  DELETE
-```bash
-DELETE /api/users/{id}
-```
-
 # Aplicacions i Plugins
 
 | Extensió      | Descripció                                                                                                        | Ventatges                                                                                                    | Desventatges                                                                                     |
