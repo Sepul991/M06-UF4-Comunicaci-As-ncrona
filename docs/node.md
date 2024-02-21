@@ -24,9 +24,11 @@
   - Para utilizar es modules los archivos deben utilizar la extensión .mjs
   - Para exportar un modulo se usa la palabra reservada Export,(pueden ser funciones o un objeto)
 
-    ![ref1] 
+    `````javascript
+    let
+    `````
 
-  - Para Importar hay que indicar un objeto el cual hay que desestructurar segun las funciones que se quieran del modulo
+  - Para Importar hay que indicar un objeto el cual hay que desestructurar segun las funciones que se quieran del modulo **super importante poner la extension del archivo**
 
     ![ref1]
 ## **Express**
@@ -43,5 +45,22 @@ Para instalar express hay que abrir una consola en la ruta del proyecto y ejecut
 
 - En la primer linea importamos el modulo de Express
 - En la segunda guardamos en una variable el objeto express
+- En la 4ta desactivamos la cabecera de express, es importante desactivarla por seguridad
+- El metodo get indica que cada request a travez de metodo get va a pasar por esta funcion, en este ejemplo una request a "/" entraria en esta funcion y nos devuelve un hola mundo
+- Por ultimo el metodo listen levanta el servidor
+## **Conexion DDBB Mysql**
+- npm install mysql2
 
-[ref1]: Aspose.Words.0c6cde61-4a97-4d9d-9e0b-42c7767aa604.001.png
+  ![ref1] 
+
+- Primero importar la dependencia
+- Luego declarar un objeto con la configuracion para la conexion
+- Por ultimo ejecutar el metodo createConnection 
+## **Hacer un get** 
+El metodo query nos permite hacer querys en la base de datos, en este caso un select nos devuelve los usuarios que buscamos. Esta query se realiza en el app.get de la ruta que queramos que lo ejecute y la devolvemos con res.json 
+## **Ejecutar el servidor**
+Para ejecutar el servidor simplemente abrimos una terminal en la carpeta raiz del proyecto y ejecutamos el comando **node --watch "nombreDelArchivo.js"**, de esta manera se reinicia el servidor automaticamente cada vez que detecte algun cambio.
+## **Propuesta de ejercicio:**
+Con toda la informacion brindada anteriormente crea un metodo que accediendo a la ruta /usuarios devuelva un documento html con una card por cada usuario
+
+[ref1]: Aspose.Words.b794e243-73a3-4d68-96a6-0ff05f21c705.001.png
