@@ -167,7 +167,7 @@ La instancia response también tiene algunos métodos interesantes, la mayoría 
 | OBJECT.clone()        | Crea y devuelve un clon de la instancia en cuestión.                  |
 |OBJECT Response.error()| Devuelve un nuevo objeto Response con un error de red asociado.       |
 |OBJECT Response.redirect(url, code) | Redirige a una url, opcionalmente con un code de error.           |
-
+````
 
 # 2. Async/Await
 ASYNC/AWAIT es una característica de JavaScript que simplifica la escritura y lectura de código asíncrono. 
