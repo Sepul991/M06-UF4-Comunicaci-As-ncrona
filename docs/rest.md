@@ -80,139 +80,37 @@ DELETE /api/users/{id}
 |----------------|-------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
 | Postman        | És una eina per provar i desenvolupar APIs. L'extensió permet accedir a les funcions principals des de l'editor. | - Permet crear i enviar solicituds HTTP. <br>- Facilita la definición y organización de colecciones de solicitudes. <br>- Permet exriure i executar proves automatitzades per APIs. | - Requereix coneixements previs sobre l'ús de Postman. <br>- Pot tenir uan curva d'aprenentatge inicial. |
 | REST Client    | És una extensió que permet enviar solicituds HTTP i veure la resposta directament a l'editor utilitzant un arxiu de text amb sintaxi similar a cURL. | - Permet definir i executar solicituds HTTP directament des d'un arxiu. <br>- Facilita la documentació i prova d'APIs a prop del codi font. | - Pot ser menys intuiriva per usuaris nous en l'ús de cURL o arxius de text estructurats. <br>- No ofereix tantas característiques avançades com Postman. |
-
-# Exemples
-## Node.js (`axios`):
-
-#### GET:
-```javascript
-const axios = require('axios');
-
-axios.get('https://jsonplaceholder.typicode.com/users/')
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-```
-#### POST:
-``` javascript
-const axios = require('axios');
-
-axios.post('https://jsonplaceholder.typicode.com/users/1', {
-    name: 'John Doe',
-    email: 'john@example.com',
-    age: 30
-  })
-  .then(response => {
-    console.log('User created:', response.data);
-  })
-  .catch(error => {
-    console.error('Error creating user:', error);
-  });
-
-```
-#### PUT:
-```javascript
-const axios = require('axios');
-
-axios.put('https://jsonplaceholder.typicode.com/users/1', {
-    name: 'John Doe',
-    email: 'john@example.com',
-    age: 35
-  })
-  .then(response => {
-    console.log('User updated:', response.data);
-  })
-  .catch(error => {
-    console.error('Error updating user:', error);
-  });
-```
-
-#### DELETE:
-
-```javascript
-const axios = require('axios');
-
-axios.delete('https://jsonplaceholder.typicode.com/users/1')
-  .then(response => {
-    console.log('User deleted:', response.data);
-  })
-  .catch(error => {
-    console.error('Error deleting user:', error);
-  });
-```
-
-## `fetch()`:
-
-#### GET:
-
-```javascript
-fetch('https://api.example.com/users')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
-```
-#### POST:
-``` javascript
-fetch('https://api.example.com/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: 'John Doe',
-      email: 'john@example.com',
-      age: 30
-    })
-  })
-  .then(response => response.json())
-  .then(data => console.log('User created:', data))
-  .catch(error => console.error('Error creating user:', error));
-```
-#### PUT:
-
-```javascript
-fetch('https://api.example.com/users/123', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: 'John Doe',
-      email: 'john@example.com',
-      age: 35
-    })
-  })
-  .then(response => response.json())
-  .then(data => console.log('User updated:', data))
-  .catch(error => console.error('Error updating user:', error));
-```
-#### DELETE:
-```javascript
-fetch('https://api.example.com/users/123', {
-    method: 'DELETE'
-  })
-  .then(response => console.log('User deleted:', response.status === 204 ? 'Successful' : 'Failed'))
-  .catch(error => console.error('Error deleting user:', error));
-```
-
 # Exercici pràctic
 
 ## Objectiu
 Familiaritzar-se amb les solicituds HTTP GET, POST, PUT i DELETE utilitzant Node.js i la funció `fetch()`.
-
 ## Enunciat
 
 1. Obtenir usuaris (GET):
-	- Realitza una solicitud GET a la API per obtindre tots els usuaris
-	- Printa per consola els usuaris obtinguts
+	1. Fes la consulta adient per aconseguir tots els _posts_
+		- Printa per consola l'estat de la consulta i si retorna alguna cosa
+	
+	1. Fes la consulta adient per aconseguir el _post_ amb _ID_ 1
+		- Printa per consola l'estat de la consulta i si retorna alguna cosa
 
-1. Agregar usuari (POST):
-	- Crea un nou usuari amb el teu nom i cognom i l'email
-
-2. Actualitzar ususari (PUT):
-
+3. Agregar usuari (POST):
+	- Crea un nou _post_: 
+		- _userId_ = 1
+		- _title_ = "Nom i cognom" 
+		- _body_ = "Això és un post de prova"
+	- Printa per consola l'estat de la consulta i si retorna alguna cosa
+	
+1. Actualitzar ususari (PUT):
+	-  Actualitza les dades del _post_ amb _ID_ 1: 
+		- _title_ = "Congom i Nom" 
+		- _body_ = "Aquest és un post actualitzat"
+	- Printa per consola l'estat de la consulta i si retorna alguna cosa
 
 3. Eliminar ususari (DELETE):
+	- Elimina l'usuari amb _ID_ 1
+	- Printa per consola l'estat de la consulta i si retorna alguna cosa
+## Eines
+- **Aplicacions**: Per tal de poder realitzar aquest exercici s'haurà de fer ús d'un dels plugins esmentats anteriorment, o de les seves respectives aplicacions.
+
+- **API**: la API necessaria per poder dur a terme els exercicis és la seguent:
+	https://jsonplaceholder.typicode.com/posts/
