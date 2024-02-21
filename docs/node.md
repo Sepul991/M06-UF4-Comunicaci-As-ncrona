@@ -25,12 +25,17 @@
   - Para exportar un modulo se usa la palabra reservada Export,(pueden ser funciones o un objeto)
 
     `````javascript
-    let
+    export function suma(a,b){
+      return a+b;
+    }
     `````
 
   - Para Importar hay que indicar un objeto el cual hay que desestructurar segun las funciones que se quieran del modulo **super importante poner la extension del archivo**
 
-    ![ref1]
+    `````javascript
+    import {suma} from './suma.mjs' 
+    console.log(suma(1,2))
+    `````
 ## **Express**
 - Express.js es un framework web de código abierto para Node.js, diseñado para construir aplicaciones web y APIs de manera rápida y sencilla. Proporciona una serie de características y utilidades que simplifican el proceso de desarrollo web en Node.js. 
 - Algunas de las características principales de Express.js son: 
@@ -41,8 +46,19 @@
 ## **Primeros pasos en express**
 Para instalar express hay que abrir una consola en la ruta del proyecto y ejecutar el comando npm install expres -e
 
-![ref1] 
 
+    `````javascript
+    import express from 'express';
+    const app = express();
+    const PORT = 1234;
+    app.disable('x-powered-by')
+    app.get('/',(req,res)=>{
+        res.send('<h1>Hola Mundo<h1/>')
+    })
+    app.listen(PORT,()=>{
+    console.log('servidor corriendo en el puerto:' + PORT)
+    })
+    `````
 - En la primer linea importamos el modulo de Express
 - En la segunda guardamos en una variable el objeto express
 - En la 4ta desactivamos la cabecera de express, es importante desactivarla por seguridad
@@ -51,13 +67,33 @@ Para instalar express hay que abrir una consola en la ruta del proyecto y ejecut
 ## **Conexion DDBB Mysql**
 - npm install mysql2
 
-  ![ref1] 
+     `````javascript
+      import mysql from 'mysql2/promise'
+      const config = {
+      host:'localhost',
+      user: 'root',
+      port: 3306,
+      password: '',
+      database: 'hakai'
+      }
+      const connection = await mysql.createConnection(config);
+    `````
 
 - Primero importar la dependencia
 - Luego declarar un objeto con la configuracion para la conexion
 - Por ultimo ejecutar el metodo createConnection 
 ## **Hacer un get** 
 El metodo query nos permite hacer querys en la base de datos, en este caso un select nos devuelve los usuarios que buscamos. Esta query se realiza en el app.get de la ruta que queramos que lo ejecute y la devolvemos con res.json 
+ `````javascript
+     app.get('/',async (req,res)=>{
+    const usuarios = await connection.query('SELECT * FROM usuarios')
+    if(usuarios){
+        res.json(usuarios);
+    }else{
+        res.status(404).json({message:'Usuarios no encontrados'})
+    }
+    })
+  `````
 ## **Ejecutar el servidor**
 Para ejecutar el servidor simplemente abrimos una terminal en la carpeta raiz del proyecto y ejecutamos el comando **node --watch "nombreDelArchivo.js"**, de esta manera se reinicia el servidor automaticamente cada vez que detecte algun cambio.
 ## **Propuesta de ejercicio:**
