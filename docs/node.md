@@ -47,7 +47,7 @@
 Para instalar express hay que abrir una consola en la ruta del proyecto y ejecutar el comando npm install expres -e
 
 
-    `````javascript
+`````javascript
     import express from 'express';
     const app = express();
     const PORT = 1234;
@@ -58,7 +58,7 @@ Para instalar express hay que abrir una consola en la ruta del proyecto y ejecut
     app.listen(PORT,()=>{
     console.log('servidor corriendo en el puerto:' + PORT)
     })
-    `````
+`````
 - En la primer linea importamos el modulo de Express
 - En la segunda guardamos en una variable el objeto express
 - En la 4ta desactivamos la cabecera de express, es importante desactivarla por seguridad
