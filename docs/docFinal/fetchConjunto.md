@@ -1,9 +1,10 @@
 # indice
 1. Introducción
 2. CRUD
-3. CORS
-4. Promesas
-5. Async/Await
+3. Headers
+4. CORS
+5. Promesas
+6. Async/Await
 
 
 # 1. Introducción a Fetch
@@ -96,7 +97,32 @@ fetch(url, {
 })
 .catch(error => console.error('Error al eliminar usuario:', error));
 ````
-# 3.CORS
+
+# 3.HEADERS
+
+
+Las cabeceras de los fetch son parte de las solicitudes HTTP que un cliente (como un navegador web) envía a un servidor para obtener recursos, como páginas web o archivos. Estas cabeceras son metadatos que proporcionan información adicional sobre la solicitud o el recurso solicitado. 
+
+Para ello, aparte del método .set() podemos utilizar varios otros para trabajar con cabeceras, comprobar su existencia, obtener o cambiar los valores o incluso eliminarlos:
+
+| Método           | Descripción                                           |
+|------------------|-------------------------------------------------------|
+| `BOOLEAN.has(STRING name)`     | Comprueba si la cabecera `name` está definida.       |
+| `STRING.get(STRING name)`     | Obtiene el valor de la cabecera `name`.               |
+| `STRING.set(STRING name, STRING value)` | Establece o modifica el valor `value` a la cabecera `name`. |
+| `STRING.append(STRING name, STRING value)` | Añade un nuevo valor `value` a la cabecera `name`.  |
+| `STRING.delete(STRING name)`  | Elimina la cabecera `name`.                           |
+
+### Algunos ejemplos comunes de cabeceras de fetch incluyen:
+
+User-Agent: Identifica el software del cliente que hace la solicitud, como el navegador web y su versión.
+Accept: Indica al servidor qué tipo de contenido puede aceptar el cliente, como HTML, JSON, imágenes, etc.
+Authorization: Se utiliza para enviar credenciales de autenticación al servidor, como un token de acceso o credenciales de usuario.
+Content-Type: Especifica el tipo de medio del cuerpo de la solicitud, lo que permite al servidor saber cómo procesar los datos enviados por el cliente.
+Cookie: Contiene información de seguimiento y estado de sesión que el cliente envía al servidor.
+Estas cabeceras son fundamentales para la comunicación entre el cliente y el servidor, ya que proporcionan información importante que ayuda a ambos lados a entender y procesar correctamente las solicitudes y respuestas HTTP.
+
+# 4.CORS
 
 CORS (Cross-Origin Resource Sharing) es una política de seguridad que regula las solicitudes HTTP asíncronas desde un navegador a un servidor con un dominio diferente al de la página original. Aunque los navegadores permiten enlazar documentos de distintos dominios en el HTML o mediante la API DOM, las solicitudes asíncronas a través de XMLHttpRequest, fetch u otras librerías similares no tienen esta libertad por defecto. Esta restricción, conocida como protección CORS, busca prevenir posibles vulnerabilidades al dificultar la inclusión de recursos externos en un sitio web, salvaguardando así la seguridad y la integridad de los datos.
 
@@ -136,12 +162,12 @@ app.listen(3000, () => {
 
 ````
 
-## 3.1 CORS en entornos de desarrollo
+## 4.1 CORS en entornos de desarrollo
 Otra opción sencilla y rápida para no tener que lidiar con CORS temporalmente es la de instalar la extensión Allow CORS, disponible tanto Allow CORS para Chrome como Allow CORS para Firefox. Esta extensión deshabilita la política CORS mientras está instalada y activada.
 
 Esta elección es equivalente a que todas las respuestas a las peticiones asíncronas realizadas tengan la mencionada cabecera con el valor *. Obviamente, es importante recalcar que es una opción que sólo nos funcionará en nuestro equipo y navegador, pero puede ser muy práctica para simplificar el trabajo en desarrollo.
 
-# 4.PROMESAS
+# 5.PROMESAS
 
 En el primer .then() tenemos un objeto response. Se trata de la respuesta que nos llega del servidor web al momento de recibir nuestra petición:
 
@@ -169,7 +195,7 @@ La instancia response también tiene algunos métodos interesantes, la mayoría 
 |OBJECT Response.redirect(url, code) | Redirige a una url, opcionalmente con un code de error.           |
 
 
-# 5. Async/Await
+# 6. Async/Await
 ASYNC/AWAIT es una característica de JavaScript que simplifica la escritura y lectura de código asíncrono. 
 
 Cuando se marca una función con la palabra clave async, esta función se vuelve asíncrona y devuelve una promesa. Dentro de esta función asíncrona, se puede utilizar la palabra clave await antes de una llamada a una función asíncrona para esperar a que esa función se complete y devuelva un resultado antes de continuar con la ejecución del código.
