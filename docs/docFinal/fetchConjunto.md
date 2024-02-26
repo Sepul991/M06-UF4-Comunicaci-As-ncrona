@@ -194,3 +194,37 @@ mostrarDatosUsuario(123);
 
 ````
  En este ejemplo, obtenerDatosUsuario es una función asíncrona que realiza una solicitud para obtener los datos de un usuario. La función mostrarDatosUsuario utiliza await para esperar a que la solicitud de datos se complete antes de continuar con el procesamiento de esos datos. Esto hace que el código sea más fácil de leer y entender, en comparación con el uso de callbacks o promesas sin async/await. 
+
+
+## EJERCICIO:
+
+
+Escribe una aplicación web que utilice la API pública de GitHub para buscar información de un usuario ingresado por el usuario. La aplicación debe mostrar el nombre de usuario, su avatar y la cantidad de repositorios públicos que tiene. Utiliza la función fetch de JavaScript para realizar la solicitud a la API de GitHub.
+
+````javascript
+    <script>
+        function fetchUserInfo() {
+            const username = document.getElementById('usernameInput').value;
+
+            fetch(`https://api.github.com/users/${username}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userInfoDiv = document.getElementById('userInfo');
+                    userInfoDiv.innerHTML = `
+                        <h2>${data.login}</h2>
+                        <img src="${data.avatar_url}" alt="Avatar" style="width: 100px; height: 100px;">
+                        <p>Public Repositories: ${data.public_repos}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    </script>
+
+````
