@@ -115,11 +115,16 @@ Para ello, aparte del método .set() podemos utilizar varios otros para trabajar
 
 ### Algunos ejemplos comunes de cabeceras de fetch incluyen:
 
-User-Agent: Identifica el software del cliente que hace la solicitud, como el navegador web y su versión.
-Accept: Indica al servidor qué tipo de contenido puede aceptar el cliente, como HTML, JSON, imágenes, etc.
-Authorization: Se utiliza para enviar credenciales de autenticación al servidor, como un token de acceso o credenciales de usuario.
-Content-Type: Especifica el tipo de medio del cuerpo de la solicitud, lo que permite al servidor saber cómo procesar los datos enviados por el cliente.
-Cookie: Contiene información de seguimiento y estado de sesión que el cliente envía al servidor.
+1. User-Agent: Identifica el software del cliente que hace la solicitud, como el navegador web y su versión.
+   
+2. Accept: Indica al servidor qué tipo de contenido puede aceptar el cliente, como HTML, JSON, imágenes, etc
+   
+3. Authorization: Se utiliza para enviar credenciales de autenticación al servidor, como un token de acceso o credenciales de usuario.
+   
+4. Content-Type: Especifica el tipo de medio del cuerpo de la solicitud, lo que permite al servidor saber cómo procesar los datos enviados por el cliente.
+   
+5. Cookie: Contiene información de seguimiento y estado de sesión que el cliente envía al servidor.
+   
 Estas cabeceras son fundamentales para la comunicación entre el cliente y el servidor, ya que proporcionan información importante que ayuda a ambos lados a entender y procesar correctamente las solicitudes y respuestas HTTP.
 
 # 4.CORS
