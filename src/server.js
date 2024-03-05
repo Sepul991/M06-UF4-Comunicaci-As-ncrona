@@ -7,10 +7,10 @@ app.disable("x-powered-by");
 
 app.use(express.json());
 
-// app.use("/", express.static("src/public"));
+app.use("/", express.static("public"));
 
 app.use("/", router);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en: http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en: http://localhost:${PORT}`);
 });
