@@ -5,7 +5,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.disable("x-powered-by");
 
-app.use("/", router);
+app.use(express.json());
+
+app.use("/", express.static("src/public"));
+
+// app.use("/", router);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
