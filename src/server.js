@@ -7,7 +7,9 @@ app.disable("x-powered-by");
 
 app.use(express.json());
 
-// app.use("/", express.static("src/public"));
+app.use("/", express.static("public"));
+
+app.use("/flights", express.static("public/flights.html"));
 
 app.use("/", router);
 

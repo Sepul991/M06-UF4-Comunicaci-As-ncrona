@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "express": "^4.18.2",
+        "feather-icons": "^4.29.1",
         "pg": "^8.11.3"
     }
 }
