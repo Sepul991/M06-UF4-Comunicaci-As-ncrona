@@ -124,6 +124,16 @@
             font-weight: 600;
             font-display: swap;
         }
+
+        .correct {
+            outline: none;
+            text-shadow: 0px 0px 2px green;
+        }
+
+        .incorrect {
+            outline: none;
+            text-shadow: 0px 0px 2px red;
+        }
     </style>
     <!-- <style class="darkreader darkreader--override" media="screen"></style> -->
 </head>
@@ -157,7 +167,7 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Tablas</label>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a href="/flights.html" class="nav-link">
                             <span class="pcoded-micon">
                                 <i data-feather="send"></i>
@@ -203,7 +213,7 @@
                                 <i data-feather="x"></i>
                             </a>
                             <span class="input-group-append search-btn btn btn-primary">
-                                <i class="feather icon-search input-group-text"></i>
+                                <i data-feather="search"></i>
                             </span>
                         </div>
                     </div>
@@ -222,143 +232,200 @@
                             <!-- [ Main Content ] start -->
                             <div class="row">
 
-                                <!-- Tabla Vuelos -->
-                                <div class="col-sm-12">
+                                <!-- Afegir -->
+                                <div class="col-12">
                                     <h1 class="px-2">Añadir</h1>
 
                                     <div class="">
                                         <div class="table-responsive">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                                        aria-describedby="emailHelp" placeholder="Enter email">
-                                                    <small id="emailHelp" class="form-text text-muted">We'll never share
-                                                        your email with anyone else.</small>
+                                            <form id="flightCreateForm">
+                                                <div class="d-flex">
+                                                    <div class="form-group col-4">
+                                                        <label for="plane">Avión *</label>
+                                                        <select name="aircraft_code" id="plane"
+                                                            class="form-control col-12 plane" required>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="flight_no">Numero de vuelo *</label>
+                                                        <input type="text" id="flight_no" class="form-control"
+                                                            name="flight_no" placeholder="Ex. AB1234" required
+                                                            maxlength="6" minlength="6">
+                                                        <small>Debe contener 6 caracteres</small>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="status">Status *</label>
+                                                        <select name="status" id="status" class="form-control col-12">
+                                                            <option value="Departed">Despegó</option>
+                                                            <option value="Arrived">Ha llegado</option>
+                                                            <option value="On Time">A tiempo</option>
+                                                            <option value="Cancelled">Cancelado</option>
+                                                            <option value="Delayed">Retraso</option>
+                                                            <option value="Scheduled">Programado</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">Password</label>
-                                                    <input type="password" class="form-control"
-                                                        id="exampleInputPassword1" placeholder="Password">
+                                                <div class="d-flex">
+                                                    <div class="form-group col-4">
+                                                        <label for="departure_airport">Aeropuerto de Salida *</label>
+                                                        <select name="departure_airport" id="departure_airport"
+                                                            class="form-control airport">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="scheduled_departure">Salida Programada *</label>
+                                                        <input type="datetime-local" id="scheduled_departure"
+                                                            class="form-control" name="scheduled_departure" required>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="actual_departure">Salida Real</label>
+                                                        <input type="datetime-local" id="actual_departure"
+                                                            class="form-control" name="actual_departure">
+                                                    </div>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                    <label class="form-check-label" for="exampleCheck1">Check me
-                                                        out</label>
+                                                <div class="d-flex">
+                                                    <div class="form-group col-4">
+                                                        <label for="arrival_airport">Aeropuerto de Llegada *</label>
+                                                        <select name="arrival_airport" id="arrival_airport"
+                                                            class="form-control airport">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="scheduled_arrival">Llegada Programada *</label>
+                                                        <input type="datetime-local" id="scheduled_arrival"
+                                                            class="form-control" name="scheduled_arrival" required>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label for="actual_arrival">Llegada Real</label>
+                                                        <input type="datetime-local" id="actual_arrival"
+                                                            class="form-control" name="actual_arrival">
+                                                    </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <button type="submit" class="py-2 px-3 btn btn-dark">Añadir
+                                                        Vuelo</button>
+                                                </div>
                                             </form>
-
-                                            <script>
-                                                fetch('/showFlights')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const flightsTableBody = document.getElementById('flights-table-body');
-                                                        data.forEach(flight => {
-                                                            const row = document.createElement('tr');
-                                                            row.innerHTML = `
-                                                                    <td>${flight.model['en']}</td>   
-                                                                    <td>${flight.flight_no}</td>
-                                                                    <td>${flight.departure}</td>
-                                                                    <td>${flight.arrival}</td>
-                                                                    <td>${flight.scheduled_departure}</td>
-                                                                    <td>${flight.scheduled_arrival}</td>
-                                                                    <td>${flight.actual_departure}</td>
-                                                                    <td>${flight.actual_arrival}</td>
-                                                                    <td>${flight.status}</td>
-                                                                `;
-                                                            flightsTableBody.appendChild(row);
-                                                        });
-
-                                                    })
-                                                    .catch(error => {
-                                                        console.error('Error fetching flights:', error);
-                                                    });
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Tabla Aeropuertos -->
-                                <div class="col-6">
-                                    <h1 class="px-2">Modificar</h1>
+                                <script>
 
-                                    <div class="card">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="">Aeropuerto</th>
-                                                        <th class="">Zona Horaria</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="airports-table-body">
-                                                    <!-- Vuelos -->
-                                                </tbody>
-                                            </table>
+                                    // POST de vol
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const form = document.getElementById('flightCreateForm');
 
-                                            <script>
-                                                fetch('/showAirports')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const airportsTableBody = document.getElementById('airports-table-body');
-                                                        data.forEach(airport => {
-                                                            const row = document.createElement('tr');
-                                                            row.innerHTML = `
-                                                                    <td>${airport.airport_code} - ${airport.airport_name} <sub>(${airport.city})</sub></td>
-                                                                    <td>${airport.timezone}</td>
-                                                                `;
-                                                            airportsTableBody.appendChild(row);
+                                        form.addEventListener('submit', function (event) {
+                                            event.preventDefault();
+
+                                            const formData = new FormData(form);
+                                            const formDataObject = Object.fromEntries(formData.entries());
+                                            // console.log(formDataObject)
+
+                                            let f_sch_departure = document.getElementById("scheduled_departure").value
+                                            let f_sch_arrival = document.getElementById("scheduled_arrival").value
+                                            let f_real_departure = document.getElementById("actual_departure").value
+                                            let f_real_arrival = document.getElementById("actual_arrival").value
+                                            console.log(f_sch_departure, f_sch_arrival, f_sch_departure <= f_sch_arrival)
+
+                                            // Funciona
+                                            if (f_sch_departure >= f_sch_arrival) {
+                                                alert("La fecha de llegada tiene que ser posterior a la de salida.");
+                                                return;
+                                            }
+
+                                            if (f_real_departure != "") {
+                                                if (f_real_departure >= f_sch_arrival) {
+                                                    alert("La fecha de llegada tiene que ser posterior a la de salida programada.");
+                                                    return;
+                                                }
+                                            }
+
+                                            if (f_real_departure != "" && f_real_arrival != "") {
+                                                if (f_real_departure >= f_real_arrival) {
+                                                    alert("La fecha programada de llegada tiene que ser posterior a la de salida programada.");
+                                                    return;
+                                                }
+                                            }
+
+
+                                            fetch('/flight', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(formDataObject)
+                                            })
+                                                .then(response => {
+                                                    console.log('Status code de la respuesta:', response.status);
+
+                                                    if (!response.ok) {
+                                                        response.json().then(errorData => {
+                                                            // if (errorData.message.includes("flights_check")) {
+                                                            //     alert("La fecha de llegada tiene que ser posterior a la de salida.");
+                                                            // }
+                                                            alert(errorData.message);
                                                         });
-                                                    })
-                                                    .catch(error => {
-                                                        console.error('Error fetching flights:', error);
-                                                    });
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
+                                                        throw new Error('Error en la respuesta de la red.');
+                                                    } else {
+                                                        console.log("Recurso creado con éxito.")
+                                                        alert("Vuelo añadido correctamente.")
+                                                        form.reset();
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error al enviar los datos del formulario:', error);
+                                                });
+                                        });
+                                    });
 
-                                <!-- Tabla Aviones -->
-                                <div class="col-6">
-                                    <h1 class="px-2">Eliminar</h1>
-                                    <div class="card">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="">Codigo</th>
-                                                        <th class="">Avión</th>
-                                                        <th class="">Distància</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="aircrafts-table-body">
-                                                    <!-- Vuelos -->
-                                                </tbody>
-                                            </table>
+                                    // Carrega els avions
+                                    fetch('/aircraft')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const planeSelect = document.getElementsByClassName('plane');
 
-                                            <script>
-                                                fetch('/showAircrafts')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const aircraftsTableBody = document.getElementById('aircrafts-table-body');
-                                                        data.forEach(aircraft => {
-                                                            const row = document.createElement('tr');
-                                                            row.innerHTML = `
-                                                                    <td>${aircraft.aircraft_code}</td>
-                                                                    <td>${aircraft.model}</td>
-                                                                    <td>${aircraft.range} Km</td>
-                                                                `;
-                                                            aircraftsTableBody.appendChild(row);
-                                                        });
-                                                    })
-                                                    .catch(error => {
-                                                        console.error('Error fetching flights:', error);
-                                                    });
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
+                                            for (let i = 0; i < planeSelect.length; i++) {
+                                                data.aircrafts.forEach(aircraft => {
+                                                    const option = document.createElement('option');
+                                                    option.value = aircraft.aircraft_code;
+                                                    option.innerHTML = `
+                                                            ${aircraft.model} (${aircraft.range} km)
+                                                        `;
+                                                    planeSelect[i].appendChild(option);
+                                                });
+                                            }
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching flights:', error);
+                                        });
+
+                                    // Carrega els aeroports
+                                    fetch('/airport')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const airportSelect = document.getElementsByClassName('airport');
+
+                                            for (const elem of airportSelect) {
+                                                data.airports.forEach(airport => {
+                                                    const option = document.createElement('option');
+                                                    option.value = airport.airport_code;
+                                                    option.innerHTML = `
+                                                            ${airport.airport_name} (${airport.city} km)
+                                                        `;
+                                                    elem.appendChild(option);
+                                                });
+                                            }
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching flights:', error);
+                                        });
+                                </script>
+
+
                             </div>
                         </div>
                     </div>

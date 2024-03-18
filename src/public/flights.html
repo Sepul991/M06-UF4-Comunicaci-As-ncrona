@@ -94,6 +94,8 @@
 
     <!-- choose one -->
     <!-- <script src="https://unpkg.com/feather-icons"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
     <style>
@@ -124,13 +126,105 @@
             font-weight: 600;
             font-display: swap;
         }
+
+        .cargando::before {
+            content: "Cargando...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #000;
+        }
     </style>
     <!-- <style class="darkreader darkreader--override" media="screen"></style> -->
 </head>
 
 <body class="" monica-locale="es">
     <!-- [ Pre-loader ] start -->
-
+    <div class="modal-dialog position-fixed" id="myModal" aria-labelledby="exampleModalLabel"
+        style="z-index: -11; top: 20px; min-width: 100vw; opacity: 0; transition: 1s;">
+        <div class="modal-dialog w-100">
+            <div class="modal-content">
+                <form id="flightModificateForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modificar vuelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="closePopUp()"><i data-feather="x"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" name="flight_id" id="flight_id_mod" hidden>
+                        <div class="d-flex">
+                            <div class="form-group col-4">
+                                <label for="plane_mod">Avión *</label>
+                                <select name="aircraft_code" id="plane_mod" class="form-control col-12 plane">
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="flight_no_mod">Nº vuelo *</label>
+                                <input type="text" id="flight_no_mod" class="form-control" name="flight_no"
+                                    placeholder="Ex. AB1234" maxlength="6" minlength="6">
+                                <small>Min. 6 caracteres</small>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="status_mod">Status *</label>
+                                <select name="status" id="status_mod" class="form-control col-12">
+                                    <option value="Departed">Despegó</option>
+                                    <option value="Arrived">Ha llegado</option>
+                                    <option value="On Time">A tiempo</option>
+                                    <option value="Cancelled">Cancelado</option>
+                                    <option value="Delayed">Retraso</option>
+                                    <option value="Scheduled">Programado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-group col-4">
+                                <label for="departure_airport_mod">Aeropuerto de Salida
+                                    *</label>
+                                <select name="departure_airport" id="departure_airport_mod"
+                                    class="form-control airport">
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="scheduled_departure_mod">Salida Programada *</label>
+                                <input type="datetime-local" id="scheduled_departure_mod" class="form-control"
+                                    name="scheduled_departure" required>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="actual_departure_mod">Salida Real</label>
+                                <input type="datetime-local" id="actual_departure_mod" class="form-control"
+                                    name="actual_departure">
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-group col-4">
+                                <label for="arrival_airport_mod">Aeropuerto de Llegada *</label>
+                                <select name="arrival_airport" id="arrival_airport_mod" class="form-control airport">
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="scheduled_arrival_mod">Llegada Programada *</label>
+                                <input type="datetime-local" id="scheduled_arrival_mod" class="form-control"
+                                    name="scheduled_arrival" required>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="actual_arrival_mod">Llegada Real</label>
+                                <input type="datetime-local" id="actual_arrival_mod" class="form-control"
+                                    name="actual_arrival">
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="py-2 px-3 btn btn-danger" id="delBtn">Eliminar Vuelo</button>
+                            <button type="submit" class="py-2 px-3 btn btn-dark" id="updBtn">Modificar Vuelo</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ navigation menu ] start -->
     <nav class="pcoded-navbar menupos-fixed menu-light brand-blue">
@@ -176,7 +270,7 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Modificaciones</label>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a href="/flights_mod.html" class="nav-link">
                             <span class="pcoded-micon">
                                 <i data-feather="edit"></i>
@@ -203,7 +297,7 @@
                                 <i data-feather="x"></i>
                             </a>
                             <span class="input-group-append search-btn btn btn-primary">
-                                <i class="feather icon-search input-group-text"></i>
+                                <i data-feather="search"></i>
                             </span>
                         </div>
                     </div>
@@ -214,6 +308,7 @@
     <!-- [ Header ] end -->
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
+
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
                 <div class="pcoded-inner-content">
@@ -222,21 +317,25 @@
                             <!-- [ Main Content ] start -->
                             <div class="row">
 
+
                                 <!-- Tabla Vuelos -->
                                 <div class="col-sm-12">
                                     <h1 class="px-2">Vuelos</h1>
 
                                     <div class="card">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped">
+                                        <!-- <input type="text" class="m-2" name="flightsSearch" id="flightsSearch"
+                                            placeholder="Buscar vuelo ..."> -->
+                                        <div class="table-responsive vh-100" style="overflow: scroll;"
+                                            id="flightsTableContainer">
+                                            <table class="table table-striped" id="flightsTable">
                                                 <thead>
                                                     <tr>
-                                                        <th class="">Avión</th>
                                                         <th class="">Numero de Vuelo</th>
-                                                        <th class="">Aeropuerto de salida</th>
+                                                        <th class="">Avión</th>
+                                                        <th class="w-auto">Aeropuerto de salida</th>
                                                         <th class="">Aeropuerto de llegada</th>
-                                                        <th class="">Salida Programada</th>
-                                                        <th class="">Llegada Programada</th>
+                                                        <!-- <th class="">Salida Programada</th> -->
+                                                        <!-- <th class="">Llegada Programada</th> -->
                                                         <th class="">Salida Real</th>
                                                         <th class="">LLegada Real</th>
                                                         <th class="">Estado</th>
@@ -246,36 +345,306 @@
                                                     <!-- Vuelos -->
                                                 </tbody>
                                             </table>
-
-                                            <script>
-                                                fetch('/showFlights')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const flightsTableBody = document.getElementById('flights-table-body');
-                                                        data.forEach(flight => {
-                                                            const row = document.createElement('tr');
-                                                            row.innerHTML = `
-                                                                    <td>${flight.model['en']}</td>   
-                                                                    <td>${flight.flight_no}</td>
-                                                                    <td>${flight.departure}</td>
-                                                                    <td>${flight.arrival}</td>
-                                                                    <td>${flight.scheduled_departure}</td>
-                                                                    <td>${flight.scheduled_arrival}</td>
-                                                                    <td>${flight.actual_departure}</td>
-                                                                    <td>${flight.actual_arrival}</td>
-                                                                    <td>${flight.status}</td>
-                                                                `;
-                                                            flightsTableBody.appendChild(row);
-                                                        });
-
-                                                    })
-                                                    .catch(error => {
-                                                        console.error('Error fetching flights:', error);
-                                                    });
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                <script>
+                                    // Funcions inicials
+                                    let skip = 0;
+                                    moreData = false;
+                                    // searchFlights();
+                                    fillFlights();
+
+                                    // Busca vols
+                                    // document.getElementById('flightsSearch').addEventListener('input', searchFlights);
+
+                                    function searchFlights() {
+                                        // let name = 0;
+                                        // let name = document.getElementById('flightsSearch').value;
+                                        // const flightsTableBody = document.getElementById('flights-table-body');
+
+                                        if (name.length > 0) {
+                                            fetch('/flight/no/' + name + `?skip=${skip}&limit=500`)
+                                                .then(response => response.json())
+                                                .then(data => {
+
+                                                    console.log(data.flights.length)
+
+                                                    flightsTableBody.innerHTML = '';
+                                                    data.flights.forEach(flight => {
+                                                        const formatDate = (dateString) => {
+                                                            if (dateString != null) {
+                                                                const date = new Date(dateString);
+                                                                return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                                                            }
+                                                            return "No definido";
+                                                        };
+
+                                                        const row = document.createElement('tr');
+                                                        row.dataset.flightId = flight.flight_no;
+                                                        row.innerHTML = `
+                                                                <td class='text-center'>${flight.flight_no}</td>
+                                                                <td>${flight.model['en']}</td>
+                                                                <td>${flight.departure}</td>
+                                                                <td>${flight.arrival}</td>
+                                                                <td>${formatDate(flight.scheduled_departure)}</td>
+                                                                <td>${formatDate(flight.scheduled_arrival)}</td>
+                                                                <td>${flight.status}</td>
+                                                            `;
+                                                        flightsTableBody.appendChild(row);
+                                                    });
+
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching flights:', error);
+                                                });
+                                        }
+                                        else {
+                                            flightsTableBody.innerHTML = "";
+                                            fillFlights()
+                                        }
+                                    }
+
+                                    // Omple la taula de vols
+                                    function fillFlights(skip = 0, limit = 500) {
+                                        const flightsTableBody = document.getElementById('flights-table-body');
+
+
+                                        fetch(`/flight?skip=${skip}&limit=${limit}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                console.log(data)
+                                                console.log("Datos fetch")
+                                                data.flights.forEach(flight => {
+                                                    let formattedDeparture = "No definido";
+                                                    let formattedArrival = "No definido"
+
+                                                    if (flight.actual_departure != null) {
+                                                        const actualDepartureDate = new Date(flight.actual_departure);
+                                                        formattedDeparture = `${actualDepartureDate.getDate().toString().padStart(2, '0')}/${(actualDepartureDate.getMonth() + 1).toString().padStart(2, '0')}/${actualDepartureDate.getFullYear()} ${actualDepartureDate.getHours().toString().padStart(2, '0')}:${actualDepartureDate.getMinutes().toString().padStart(2, '0')}:${actualDepartureDate.getSeconds().toString().padStart(2, '0')}`;
+                                                    }
+
+                                                    if (flight.actual_arrival != null) {
+                                                        const actualArrivalDate = new Date(flight.actual_arrival);
+                                                        formattedArrival = `${actualArrivalDate.getDate().toString().padStart(2, '0')}/${(actualArrivalDate.getMonth() + 1).toString().padStart(2, '0')}/${actualArrivalDate.getFullYear()} ${actualArrivalDate.getHours().toString().padStart(2, '0')}:${actualArrivalDate.getMinutes().toString().padStart(2, '0')}:${actualArrivalDate.getSeconds().toString().padStart(2, '0')}`;
+                                                    }
+                                                    const row = document.createElement('tr');
+                                                    row.style.cursor = "pointer"
+                                                    row.dataset.flightId = flight.flight_id;
+                                                    row.innerHTML = `
+                                                        <td class='text-center'>${flight.flight_no}</td>
+                                                        <td>${flight.model['en']}</td>   
+                                                        <td>${flight.departure}</td>
+                                                        <td>${flight.arrival}</td>
+                                                        <td data-actual_departure='${flight.actual_departure}'>${formattedDeparture}</td>
+                                                        <td data-actual_arrival='${flight.actual_arrival}'>${formattedArrival}</td>
+                                                        <td>${flight.status}</td>
+                                                    `;
+
+                                                    flightsTableBody.appendChild(row);
+                                                });
+                                                flightsTableBody.classList.remove("cargando");
+                                                moreData = true;
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching flights:', error);
+                                            });
+                                        flightsTableBody.classList.add("cargando");
+                                    }
+
+                                    // Mostra el Pop-Up i omple els seus camps
+                                    document.getElementById("flightsTable").addEventListener("click", function (e) {
+
+
+                                        // Mostra el Pop-Up
+                                        document.getElementById("myModal").style.zIndex = "1";
+                                        setTimeout(() => {
+                                            document.getElementById("myModal").style.opacity = "1";
+                                            document.getElementsByTagName("body")[0].style.overflow = "hidden";
+                                        }, 300);
+                                        // document.getElementById("myModal").style.opacity = "1";
+
+                                        // Omple els camps del Pop-Up
+                                        fetch('/flight/id/' + e.target.parentElement.dataset.flightId)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                const flightData = data.flights[0];
+                                                document.getElementById("flight_id_mod").value = flightData.flight_id;
+                                                document.getElementById("flight_no_mod").value = flightData.flight_no;
+                                                document.getElementById("plane_mod").value = flightData.aircraft_code;
+                                                document.getElementById("status_mod").value = flightData.status;
+                                                document.getElementById("departure_airport_mod").value = flightData.departure_airport;
+                                                document.getElementById("arrival_airport_mod").value = flightData.arrival_airport;
+                                                document.getElementById("scheduled_departure_mod").value = new Date(flightData.scheduled_departure).toISOString().slice(0, 16);
+                                                document.getElementById("scheduled_arrival_mod").value = new Date(flightData.scheduled_arrival).toISOString().slice(0, 16);
+                                                document.getElementById("actual_departure_mod").value = (flightData.actual_departure != null) ? new Date(flightData.actual_departure).toISOString().slice(0, 16) : "";
+                                                document.getElementById("actual_arrival_mod").value = (flightData.actual_arrival != null) ? new Date(flightData.actual_arrival).toISOString().slice(0, 16) : "";
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching flights:', error);
+                                            });
+                                    });
+
+                                    const container = document.getElementById('flightsTableContainer');
+                                    // console.log(container.scrollTo(0, 0))
+                                    container.addEventListener("scroll", function (e) {
+                                        // Scroll Height -> Altura total del contenido
+                                        // Scroll Top -> Posición actual del scroll
+                                        // Client Height -> Altura visible del contenido
+                                        let dif = container.scrollHeight - container.scrollTop - container.clientHeight;
+                                        // console.log('Width:', container.scrollHeight, "Pos:", scrollTop, "Visible:", container.clientHeight, "Dif:", container.scrollHeight - scrollTop - container.clientHeight);
+
+                                        if (dif <= 300 && moreData) {
+                                            moreData = false;
+                                            console.log("Recarrega")
+                                            skip += 500;
+                                            fillFlights(skip);
+                                        }
+                                    });
+
+                                    // Carrega els avions al Pop-Up
+                                    fetch('/aircraft')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const planeSelect = document.getElementsByClassName('plane');
+
+                                            for (let i = 0; i < planeSelect.length; i++) {
+                                                data.aircrafts.forEach(aircraft => {
+                                                    const option = document.createElement('option');
+                                                    option.value = aircraft.aircraft_code;
+                                                    option.innerHTML = `
+                                                        ${aircraft.model} (${aircraft.range} km)
+                                                    `;
+                                                    planeSelect[i].appendChild(option);
+                                                });
+                                            }
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching flights:', error);
+                                        });
+
+                                    // Carrega els aeroports al Pop-Up
+                                    fetch('/airport')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const airportSelect = document.getElementsByClassName('airport');
+
+                                            for (const elem of airportSelect) {
+                                                data.airports.forEach(airport => {
+                                                    const option = document.createElement('option');
+                                                    option.value = airport.airport_code;
+                                                    option.innerHTML = `
+                                                        ${airport.airport_name} (${airport.city} km)
+                                                    `;
+                                                    elem.appendChild(option);
+                                                });
+                                            }
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching flights:', error);
+                                        });
+
+                                    // Tanca el Pop-Up
+                                    function closePopUp() {
+                                        document.getElementById("myModal").style.opacity = "0";
+                                        setTimeout(() => {
+                                            document.getElementById("myModal").style.zIndex = "-1";
+                                        }, 1000);
+                                        document.getElementsByTagName("body")[0].style.overflow = "auto";
+                                    }
+
+                                    // Funcions del Pop-Up (Delete - Put)
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const form = document.getElementById('flightModificateForm');
+                                        const deleteButton = form.querySelector('button#delBtn');
+                                        const updateButton = form.querySelector('button#updBtn');
+
+                                        const getFormDataObject = (form) => {
+                                            const formData = new FormData(form);
+                                            return Object.fromEntries(formData.entries());
+                                        };
+
+                                        const handleResponse = (response, successMessage) => {
+                                            console.log('Status code de la respuesta:', response.status);
+                                            if (response.ok) {
+                                                console.log(successMessage);
+                                                fillFlights();
+                                                closePopUp();
+                                                location.reload();
+                                            } else {
+                                                console.log('Error en la respuesta de la red.', response.message);
+                                                throw new Error('Error en la respuesta de la red.');
+                                            }
+                                        };
+
+                                        // Elimina un vol
+                                        deleteButton.addEventListener("click", function (e) {
+                                            console.log("delete - WORKS")
+                                            let name = getFormDataObject(form)['flight_id'];
+
+                                            fetch('/flight/' + name, {
+                                                method: 'DELETE',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then(response => handleResponse(response, 'Recurso eliminado correctamente'))
+                                                .catch(error => console.error('Se produjo un error:', error));
+                                        });
+
+                                        // Modifica un vol
+                                        updateButton.addEventListener("click", function (e) {
+                                            console.log("put")
+                                            let formDataObject = getFormDataObject(form);
+                                            let name = formDataObject['flight_id'];
+
+                                            let f_sch_departure = document.getElementById("scheduled_departure_mod").value
+                                            let f_sch_arrival = document.getElementById("scheduled_arrival_mod").value
+                                            let f_real_departure = document.getElementById("actual_departure_mod").value
+                                            let f_real_arrival = document.getElementById("actual_arrival_mod").value
+
+                                            if (f_sch_departure >= f_sch_arrival) {
+                                                alert("La fecha de llegada tiene que ser posterior a la de salida.");
+                                                return;
+                                            }
+
+                                            if (f_real_departure != "") {
+                                                if (f_real_departure >= f_sch_arrival) {
+                                                    alert("La fecha de llegada tiene que ser posterior a la de salida programada.");
+                                                    return;
+                                                }
+                                            }
+
+                                            if (f_real_departure != "" && f_real_arrival != "") {
+                                                if (f_real_departure >= f_real_arrival) {
+                                                    alert("La fecha programada de llegada tiene que ser posterior a la de salida programada.");
+                                                    return;
+                                                }
+                                            }
+
+                                            fetch('/flight/id/' + name, {
+                                                method: 'PUT',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify(formDataObject)
+                                            })
+                                                .then(response => handleResponse(response, 'Recurso actualizado correctamente'))
+                                                .catch(error => console.error('Se produjo un error al intentar actualizar el recurso:', error));
+                                        });
+
+                                        // Evita l'enviament del formulari
+                                        form.addEventListener('submit', function (event) {
+                                            event.preventDefault();
+                                        });
+                                    });
+                                </script>
 
                                 <!-- Tabla Aeropuertos -->
                                 <div class="col-6">
@@ -296,11 +665,11 @@
                                             </table>
 
                                             <script>
-                                                fetch('/showAirports')
+                                                fetch('/airport')
                                                     .then(response => response.json())
                                                     .then(data => {
                                                         const airportsTableBody = document.getElementById('airports-table-body');
-                                                        data.forEach(airport => {
+                                                        data.airports.forEach(airport => {
                                                             const row = document.createElement('tr');
                                                             row.innerHTML = `
                                                                     <td>${airport.airport_code} - ${airport.airport_name} <sub>(${airport.city})</sub></td>
@@ -336,11 +705,11 @@
                                             </table>
 
                                             <script>
-                                                fetch('/showAircrafts')
+                                                fetch('/aircraft')
                                                     .then(response => response.json())
                                                     .then(data => {
                                                         const aircraftsTableBody = document.getElementById('aircrafts-table-body');
-                                                        data.forEach(aircraft => {
+                                                        data.aircrafts.forEach(aircraft => {
                                                             const row = document.createElement('tr');
                                                             row.innerHTML = `
                                                                     <td>${aircraft.aircraft_code}</td>
