@@ -4,10 +4,11 @@ export class FController {
   static async show_flights(req, res) {
     console.log("GET");
     try {
+      // Agafa els parametres enviats per URL
       const skip = req.query.skip;
       const limit = req.query.limit;
 
-      console.log(skip, limit);
+      console.log("Skip:", skip, "- Limit:", limit);
 
       const flights = await Flights.get_flights(skip, limit);
 

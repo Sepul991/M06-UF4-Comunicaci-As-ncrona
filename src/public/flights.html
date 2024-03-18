@@ -578,7 +578,13 @@
                                                 closePopUp();
                                                 location.reload();
                                             } else {
-                                                console.log('Error en la respuesta de la red.', response.message);
+                                                response.json().then(errorData => {
+                                                    if (errorData.message.includes("ticket_flights_flight_id_fkey")) {
+                                                        alert("Es necesario eliminar el tiquet correspondiente antes.");
+                                                    }
+                                                    // alert(errorData.message);
+                                                });
+                                                // console.log('Error en la respuesta de la red.', response.message);
                                                 throw new Error('Error en la respuesta de la red.');
                                             }
                                         };
@@ -651,7 +657,7 @@
                                     <h1 class="px-2">Aeropuertos</h1>
 
                                     <div class="card">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive overflow-scroll" style="height: 75vh;">
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -672,7 +678,7 @@
                                                         data.airports.forEach(airport => {
                                                             const row = document.createElement('tr');
                                                             row.innerHTML = `
-                                                                    <td>${airport.airport_code} - ${airport.airport_name} <sub>(${airport.city})</sub></td>
+                                                                    <td style='font-size:15px;'>${airport.airport_code} - ${airport.airport_name} <sub>(${airport.city})</sub></td>
                                                                     <td>${airport.timezone}</td>
                                                                 `;
                                                             airportsTableBody.appendChild(row);
