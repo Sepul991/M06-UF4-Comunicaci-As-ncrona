@@ -144,7 +144,7 @@
     <!-- [ Pre-loader ] start -->
     <div class="modal-dialog position-fixed" id="myModal" aria-labelledby="exampleModalLabel"
         style="z-index: -11; top: 20px; min-width: 100vw; opacity: 0; transition: 1s;">
-        <div class="modal-dialog w-100" style="width: 50vw;">
+        <div class="modal-dialog w-100">
             <div class="modal-content">
                 <form id="flightModificateForm">
                     <div class="modal-header">
@@ -179,39 +179,36 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="departure_airport_mod">Aeropuerto de Salida
                                     *</label>
                                 <select name="departure_airport" id="departure_airport_mod"
                                     class="form-control airport">
                                 </select>
                             </div>
-                            <div class="form-group col-6">
-                                <label for="arrival_airport_mod">Aeropuerto de Llegada *</label>
-                                <select name="arrival_airport" id="arrival_airport_mod" class="form-control airport">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="scheduled_departure_mod">Salida Programada *</label>
                                 <input type="datetime-local" id="scheduled_departure_mod" class="form-control"
                                     name="scheduled_departure" required>
                             </div>
-                            <div class="form-group col-6">
-                                <label for="scheduled_arrival_mod">Llegada Programada *</label>
-                                <input type="datetime-local" id="scheduled_arrival_mod" class="form-control"
-                                    name="scheduled_arrival" required>
-                            </div>
-
-                        </div>
-                        <div class="d-flex">
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="actual_departure_mod">Salida Real</label>
                                 <input type="datetime-local" id="actual_departure_mod" class="form-control"
                                     name="actual_departure">
                             </div>
-                            <div class="form-group col-6">
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-group col-4">
+                                <label for="arrival_airport_mod">Aeropuerto de Llegada *</label>
+                                <select name="arrival_airport" id="arrival_airport_mod" class="form-control airport">
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="scheduled_arrival_mod">Llegada Programada *</label>
+                                <input type="datetime-local" id="scheduled_arrival_mod" class="form-control"
+                                    name="scheduled_arrival" required>
+                            </div>
+                            <div class="form-group col-4">
                                 <label for="actual_arrival_mod">Llegada Real</label>
                                 <input type="datetime-local" id="actual_arrival_mod" class="form-control"
                                     name="actual_arrival">
@@ -477,6 +474,7 @@
                                                 const flightData = data.flights[0];
                                                 document.getElementById("flight_id_mod").value = flightData.flight_id;
                                                 document.getElementById("flight_no_mod").value = flightData.flight_no;
+                                                console.log(flightData.aircraft_code)
                                                 document.getElementById("plane_mod").value = flightData.aircraft_code;
                                                 document.getElementById("status_mod").value = flightData.status;
                                                 document.getElementById("departure_airport_mod").value = flightData.departure_airport;
@@ -602,11 +600,14 @@
                                             console.log("delete - WORKS")
                                             let name = getFormDataObject(form)['flight_id'];
 
-                                            fetch("/flight/" + name, {
-                                                method: 'DELETE'
+                                            fetch('/flight/' + name, {
+                                                method: 'DELETE',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
                                             })
                                                 .then(response => handleResponse(response, 'Recurso eliminado correctamente'))
-                                                .catch(error => console.error('Se produjo un error al intentar eliminar el recurso:', error));
+                                                .catch(error => console.error('Se produjo un error:', error));
                                         });
 
                                         // Modifica un vol
@@ -639,7 +640,7 @@
                                                 }
                                             }
 
-                                            fetch('/flight/' + name, {
+                                            fetch('/flight/id/' + name, {
                                                 method: 'PUT',
                                                 headers: {
                                                     'Content-Type': 'application/json',

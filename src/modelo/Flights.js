@@ -26,18 +26,19 @@ export class Flights {
   static async get_flight_by_no(flightId) {
     const client = await dbclient();
 
-    const query = `
-    SELECT flight_id, flight_no, scheduled_departure, scheduled_arrival, departure_airport, da.airport_name as departure, arrival_airport, aa.airport_name as arrival, status, f.aircraft_code, ad.model, actual_departure, actual_arrival
-    FROM Flights f
-        JOIN Airports da ON (da.airport_code = f.departure_airport)
-        JOIN Airports aa ON (aa.airport_code = f.arrival_airport)
-        JOIN aircrafts_data ad ON (ad.aircraft_code = f.aircraft_code)
-        where flight_no LIKE $1 || '%'
-        ORDER BY flight_id DESC
-        LIMIT 5000;
-      `;
-
-    const flights = await client.query(query, [flightId]);
+    const flights = await client.query(
+      `
+      SELECT flight_id, flight_no, scheduled_departure, scheduled_arrival, departure_airport, da.airport_name as departure, arrival_airport, aa.airport_name as arrival, status, f.aircraft_code, ad.model, actual_departure, actual_arrival
+      FROM Flights f
+      JOIN Airports da ON (da.airport_code = f.departure_airport)
+      JOIN Airports aa ON (aa.airport_code = f.arrival_airport)
+      JOIN aircrafts_data ad ON (ad.aircraft_code = f.aircraft_code)
+      where flight_no LIKE $1 || '%'
+      ORDER BY flight_id DESC
+      LIMIT 5000;
+      `,
+      [flightId]
+    );
 
     console.log(flights);
     await client.end();
@@ -47,16 +48,17 @@ export class Flights {
   static async get_flight_by_id(flightId) {
     const client = await dbclient();
 
-    const query = `
-    SELECT flight_id, flight_no, scheduled_departure, scheduled_arrival, departure_airport, da.airport_name as departure, arrival_airport, aa.airport_name as arrival, status, f.aircraft_code, ad.model, actual_departure, actual_arrival
-    FROM Flights f
-        JOIN Airports da ON (da.airport_code = f.departure_airport)
-        JOIN Airports aa ON (aa.airport_code = f.arrival_airport)
-        JOIN aircrafts_data ad ON (ad.aircraft_code = f.aircraft_code)
-        WHERE flight_id = $1
-      `;
-
-    const flights = await client.query(query, [flightId]);
+    const flights = await client.query(
+      `
+      SELECT flight_id, flight_no, scheduled_departure, scheduled_arrival, departure_airport, da.airport_name as departure, arrival_airport, aa.airport_name as arrival, status, f.aircraft_code, ad.model, actual_departure, actual_arrival
+      FROM Flights f
+      JOIN Airports da ON (da.airport_code = f.departure_airport)
+      JOIN Airports aa ON (aa.airport_code = f.arrival_airport)
+      JOIN aircrafts_data ad ON (ad.aircraft_code = f.aircraft_code)
+      WHERE flight_id = $1
+      `,
+      [flightId]
+    );
 
     await client.end();
     return flights.rows;

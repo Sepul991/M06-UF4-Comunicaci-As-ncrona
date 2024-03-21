@@ -5,6 +5,7 @@ export const router = Router();
 
 // get Flights
 router.get("/flight", FController.show_flights);
+
 router.get("/flight/no/:f_no", FController.show_flight_by_no);
 
 router.get("/flight/id/:f_id", FController.show_flight_by_id);
@@ -13,7 +14,7 @@ router.get("/flight/id/:f_id", FController.show_flight_by_id);
 router.post("/flight", FController.create_flights);
 
 // put Flights
-router.put("/flight/id/:f_id", FController.update_flights);
+router.put("/flight/:f_id", FController.update_flights);
 
 // delete Flights
 router.delete("/flight/:f_id", FController.delete_flight_by_id);
