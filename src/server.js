@@ -1,6 +1,7 @@
 import express from "express";
 import { getRoutes } from "./rutas/getRoutesTickets.js";
 import { postRoutes } from "./rutas/postRoutesTickets.js";
+import { deleteRoutes } from "./rutas/deleteRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 1234;
@@ -17,6 +18,7 @@ app.use("/", express.static("view"));
 
 app.use("/", getRoutes);
 app.use("/", postRoutes);
+app.use("/", deleteRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en: http://localhost:${PORT}`);

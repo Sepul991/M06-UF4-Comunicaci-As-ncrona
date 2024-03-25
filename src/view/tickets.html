@@ -3,81 +3,13 @@
 <html lang="en" data-lt-installed="true">
 
 <head>
+    <script src="../src/styles/scrollCss.css"></script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <style class="darkreader darkreader--text" media="screen"></style>
-    <style class="darkreader darkreader--invert" media="screen"></style>
-    <style class="darkreader darkreader--inline" media="screen">
-        [data-darkreader-inline-bgcolor] {
-            background-color: var(--darkreader-inline-bgcolor) !important;
-        }
+    <link rel="stylesheet" href="../public/scrollCss.css">
 
-        [data-darkreader-inline-bgimage] {
-            background-image: var(--darkreader-inline-bgimage) !important;
-        }
-
-        [data-darkreader-inline-border] {
-            border-color: var(--darkreader-inline-border) !important;
-        }
-
-        [data-darkreader-inline-border-bottom] {
-            border-bottom-color: var(--darkreader-inline-border-bottom) !important;
-        }
-
-        [data-darkreader-inline-border-left] {
-            border-left-color: var(--darkreader-inline-border-left) !important;
-        }
-
-        [data-darkreader-inline-border-right] {
-            border-right-color: var(--darkreader-inline-border-right) !important;
-        }
-
-        [data-darkreader-inline-border-top] {
-            border-top-color: var(--darkreader-inline-border-top) !important;
-        }
-
-        [data-darkreader-inline-boxshadow] {
-            box-shadow: var(--darkreader-inline-boxshadow) !important;
-        }
-
-        [data-darkreader-inline-color] {
-            color: var(--darkreader-inline-color) !important;
-        }
-
-        [data-darkreader-inline-fill] {
-            fill: var(--darkreader-inline-fill) !important;
-        }
-
-        [data-darkreader-inline-stroke] {
-            stroke: var(--darkreader-inline-stroke) !important;
-        }
-
-        [data-darkreader-inline-outline] {
-            outline-color: var(--darkreader-inline-outline) !important;
-        }
-
-        [data-darkreader-inline-stopcolor] {
-            stop-color: var(--darkreader-inline-stopcolor) !important;
-        }
-    </style>
-    <style class="darkreader darkreader--variables" media="screen">
-        :root {
-            --darkreader-neutral-background: #212222;
-            --darkreader-neutral-text: #eae3d9;
-            --darkreader-selection-background: #165aaa;
-            --darkreader-selection-text: #fbf5ec;
-        }
-    </style>
-    <style class="darkreader darkreader--root-vars" media="screen"></style>
 
     <title>Flash Able - Bootstrap Basic Tables</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
-    <!-- Meta -->
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description"
@@ -126,11 +58,34 @@
             font-weight: 600;
             font-display: swap;
         }
+
+        /* tabla reservas */
+        #tb {
+            border: rgb(228, 226, 226) solid 1px;
+            overflow: scroll;
+            height: 50vh;
+        }
+
+        #tt {
+            border: rgb(228, 226, 226) solid 1px;
+            overflow: scroll;
+            height: 50vh;
+        }
+
+        .editBook {
+            display: none;
+        }
+
+        .editTickets {
+
+            display: none;
+        }
     </style>
-    <style class="darkreader darkreader--override" media="screen"></style>
+
+
 </head>
 
-<body class="" monica-locale="es" monica-version="4.8.3" monica-id="ofpnmcalabcbjgholdjcjblkibolbppb">
+<body>
     <!-- [ Pre-loader ] start -->
 
     <!-- [ Pre-loader ] End -->
@@ -384,9 +339,12 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Añadir nueva reserva</h5>
                                                 <!-- <p class="card-text">Pestaña para crear un nuevo ticket</p> -->
-                                                <a href="/new" class="btn btn-primary">Añadir</a>
+                                                <a href="/newBooking" class="btn btn-primary">Añadir</a>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="pepe">
+
                                     </div>
                                     <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
                                     <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -399,148 +357,611 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Añadir Ticket a la Reserva</h5>
                                                 <p class="card-text">SIN RESERVA NO SE PUEDE AÑADIR TICKETS</p>
-                                                <a href="/new" class="btn btn-primary">Añadir</a>
+                                                <a href="/newTicket" class="btn btn-primary">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
-
-
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>RESERVAS PROGRAMADAS</h5>
                                             <span class="d-block m-t-5">RESERVAS
+
                                         </div>
-                                        <div class="card-body table-border-style">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Referencia de la reserva</th>
-                                                            <th>Fecha de la reserva</th>
-                                                            <th>Total de la reserva</th>
-                                                            <th>EDITAR</th>
-                                                            <th>ELIMINAR</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="infoBooking">
-                                                        <!--  -->
-                                                    </tbody>
-                                                </table>
+                                        <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
+                                        <div>
+                                            <div>
+                                                <div>
+                                                    <label for="buscarReserva">Buscar Reserva:</label>
+                                                    <input type="text" id="buscarReserva" list="sugerencias">
+                                                    <datalist id="sugerencias"></datalist>
+                                                </div>
+                                                <div class="card-body table-border-style">
+                                                    <div class="table-responsive">
+                                                        <table class="table booking-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Referencia de la reserva</th>
+                                                                    <th>Fecha de la reserva</th>
+                                                                    <th>Total de la reserva</th>
+                                                                    <th>EDITAR</th>
+                                                                    <th>ELIMINAR</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tablaReservas">
+                                                                <!-- Aquí se mostrarán los datos de la reserva seleccionada -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <script>
+                                                    function buscarReservas() {
+                                                        const inputReserva = document.getElementById('buscarReserva');
+                                                        const tablaReservas = document.getElementById('tablaReservas');
+
+                                                        fetch('/booking')
+                                                            .then(resp => resp.json())
+                                                            .then(data => {
+                                                                const reservas = data;
+                                                                inputReserva.addEventListener('input', function () {
+                                                                    const valorInput = inputReserva.value.trim(); // Obtener el valor del input sin espacios en blanco al principio y al final
+                                                                    if (valorInput === '') {
+                                                                        // Si el valor del input está vacío, limpiar las sugerencias y no mostrar ninguna
+                                                                        mostrarSugerencias([]);
+                                                                    } else {
+                                                                        // Si hay un valor en el input, filtrar y mostrar las sugerencias
+                                                                        const sugerencias = reservas.filter(reserva => reserva.book_ref.includes(valorInput));
+                                                                        mostrarSugerencias(sugerencias);
+                                                                    }
+                                                                });
+                                                            })
+                                                            .catch(err => {
+                                                                console.log('Errores al obtener las reservas', err);
+                                                            });
+                                                    }
+
+                                                    function mostrarSugerencias(sugerencias) {
+                                                        const datalist = document.getElementById('sugerencias');
+                                                        datalist.innerHTML = ''; // Limpiar las sugerencias anteriores
+
+                                                        if (sugerencias.length > 0) {
+                                                            // Si hay sugerencias, mostrarlas en el datalist
+                                                            sugerencias.forEach(sugerencia => {
+                                                                const option = document.createElement('option');
+                                                                option.value = sugerencia.book_ref;
+                                                                datalist.appendChild(option);
+                                                            });
+                                                        }
+
+                                                        // Mostrar los datos de la reserva seleccionada
+                                                        mostrarReservaSeleccionada(sugerencias[0]); // Muestra la primera sugerencia por defecto
+                                                    }
+
+                                                    function mostrarReservaSeleccionada(reserva) {
+                                                        const tablaReservas = document.getElementById('tablaReservas');
+                                                        tablaReservas.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos datos
+
+                                                        if (reserva) {
+                                                            const row = document.createElement('tr');
+                                                            row.innerHTML = `
+                                                        <td>${reserva.book_ref}</td>
+                                                        <td>${reserva.book_date}</td>
+                                                        <td>${reserva.total_amount}</td>
+                                                        <td><button class="btn btn-warning btn-sm">EDITAR</button></td>
+                                                        <td><button class="btn btn-danger btn-sm">ELIMINAR</button></td>
+                                                    `;
+                                                            tablaReservas.appendChild(row);
+                                                        }
+                                                    }
+
+                                                    buscarReservas();
+                                                </script>
+
+                                                <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
+                                                <!-- RESERVAS -->
+                                                <div class="card-body table-border-style">
+                                                    <div class="table-responsive" id="tb">
+                                                        <table class="table booking-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Referencia de la reserva</th>
+                                                                    <th>Fecha de la reserva</th>
+                                                                    <th>Total de la reserva</th>
+                                                                    <th>EDITAR</th>
+                                                                    <th>ELIMINAR</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="infoBooking">
+                                                                <!--  -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    // 
-                                    function tableBooking() {
-                                        // 
-                                        const tbodyBooking = document.getElementById('infoBooking');
-                                        fetch('/booking')
-                                            .then(resp => resp.json())
-                                            .then(data => {
-                                                data.forEach(infoData => {
-                                                    const row = document.createElement('tr');
-                                                    row.innerHTML = `
-                                                                <td>${infoData.book_ref}</td>
-                                                                <td>${infoData.book_date}</td>
-                                                                <td>${infoData.total_amount}</td>
-                                                                <td><button class="btn btn-warning btn-sm" >
-                                                                <a href="/modificarReserva/${infoData.book_ref}/edit">EDITAR</a>
-                                                                </button></td>
-                                                                <td><button class="btn btn-danger btn-sm" >
-                                                                <a href="/modificarReserva/${infoData.book_ref}/edit">ELIMINAR</a>
-                                                                </button></td>
-                                                            `;
-                                                    tbodyBooking.appendChild(row);
-                                                });
-                                                console.log(data);
-                                            })
-                                            .catch(err => {
-                                                console.error('Error al obtener las reservas', err);
-                                            })
-                                    }
 
-                                    tableBooking();
-                                </script>
+                                        <!-- EDITAR RESERVAS -->
+                                        <div id="editBooking" class="editBook" style="  position: fixed;
+                                                        top: 0;
+                                                        left: 0;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        background-color: rgba(0, 0, 0, 0.5); 
+                                                        z-index: 999999; 
+                                                        
+                                                        
+                                                        ">
+                                            <div style="  background-color: white;padding: 
+                                            20px;
+                                            border-radius: 5px;
+                                            width: 30vw;
+                                            height: auto;
+                                            z-index: 1000000;
+                                            position: relative;
+                                            top: 15%;
+                                            left: 40%;">
+                                                <div class="form-outline mb-4">
+                                                    <label class="form-label" for="oldDateBook">Fecha actual
+                                                        reserva</label>
+                                                    <input type="date(" format"timestamp)" id="oldDateBook"
+                                                        name="oldDateBook" class="form-control form-control-lg"
+                                                        readonly />
+                                                </div>
+                                                <form action=" /editBooking" method="post" id="formBook">
+                                                    <div class=" form-outline mb-4">
+                                                        <label for="nReserva" class="form-label">nº reserva</label>
+                                                        <input name="nReserva" type="text" id="nReserva"
+                                                            class="form-control form-control-lg" readonly />
+                                                    </div>
 
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>Información de los billetes</h5>
-                                        </div>
-                                        <div class="card-body table-border-style">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Código de reserva</th>
-                                                            <th>Numero de Ticket</th>
-                                                            <th>Id del pasajero</th>
-                                                            <th>Nombre del pasajero</th>
-                                                            <th>Telefono principal</th>
-                                                            <th>Email pasajero</th>
-                                                            <th>Modificar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="infoTickets">
-                                                        <!--  -->
-                                                    </tbody>
-                                                </table>
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="dateBook">Fecha nueva
+                                                            reserva</label>
+                                                        <input type="date" id="dateBook" name="dateBook"
+                                                            class="form-control form-control-lg" />
+                                                    </div>
+
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="totalAmount">Precio total</label>
+                                                        <input type="text" id="totalAmount" name="totalAmount"
+                                                            class="form-control form-control-lg" />
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit"
+                                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Modificar</button>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center">
+                                                        <button id="backButton" type="button"
+                                                            class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
+                                                            style="width:10vw ;">Atras</button>
+                                                    </div>
+
+                                                </form>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    // 
-                                    function tablaTicket() {
-                                        const tbody = document.getElementById('infoTickets');
-                                        // tbody.innerHTML = '';
+                                        <script>
+                                            // todo: implement Mirar porque no se acet
+                                            document.querySelector('#formBook').addEventListener('submit', function (event) {
+                                                event.preventDefault();
+                                                // Obtén los datos del formulario
+                                                const formData = new FormData(this);
+
+                                                // Realiza la solicitud POST al servidor
+                                                fetch("/editBooking", {
+                                                    method: "PUT",
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                    },
+                                                    body: JSON.stringify(Object.fromEntries(formData)), // Convierte FormData a un objeto JSON
+                                                })
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            throw new Error('Error al actualizar el registro' + response.statusText)
+                                                        }
+                                                        return response.json();
+                                                    })
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            buscarReservas();
+                                                            alert("¡Reserva agregada exitosamente!");
+                                                        } else {
+                                                            // Si la operación falló, muestra el mensaje de error recibido del servidor
+                                                            alert(data.message);
+                                                        }
+                                                    })
+                                                    .catch(error => {
+
+                                                        console.error("Error al agregar reserva:", error);
+                                                        alert("Error interno del servidor. Por favor, inténtalo de nuevo más tarde.");
+                                                    });
+                                            });
+
+                                        </script>
+                                        <script>
+
+                                            document.getElementById('infoBooking').addEventListener('click', function (e) {
+                                                // 
+                                                let boxEdit = document.getElementById('editBooking');
+                                                if (e.target.tagName == 'BUTTON' && e.target.classList.contains('edit')) {
+                                                    if (boxEdit.style.display === 'none' || boxEdit.style.display === '') {
+                                                        boxEdit.style.display = 'block'; // Cambia a display:block
+                                                    } else {
+                                                        boxEdit.style.display = 'none'; // Cambia a display:none
+                                                    }
+                                                }
+
+                                            });
+                                            document.getElementById('backButton').addEventListener('click', function () {
+                                                let boxEdit = document.getElementById('editBooking');
+                                                boxEdit.style.display = 'none';
+                                            });
 
 
-                                        fetch('/tickets')
-                                            .then(resp => resp.json())
-                                            .then(data => {
-                                                data.forEach(infoData => {
-                                                    const row = document.createElement('tr');
-                                                    row.innerHTML = `
-                                                                <td>${infoData.book_ref}</td>
-                                                                <td>${infoData.ticket_no}</td>
-                                                                <td>${infoData.passenger_id}</td>
-                                                                <td>${infoData.passenger_name}</td>
-                                                                <td>${infoData.telefono_1}</td>
-                                                                <td>${infoData.email}</td>
-                                                                <td><button class="btn btn-warning btn-sm" >
-                                                                    <a href="/modificarticket/${infoData.ticket_no}/edit">EDITAR</a>
+                                        </script>
+                                        <script>
+                                            // 
+                                            // CARGAR RESERVAS
+                                            let moreData = true;
+                                            let saltar = 0;
+
+
+                                            function tableBooking(saltar = 0) {
+                                                const tbodyBooking = document.getElementById('infoBooking');
+                                                fetch(`/booking?saltar=${saltar}`)
+                                                    .then(resp => resp.json())
+                                                    .then(data => {
+                                                        // tbodyBooking.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos registros
+                                                        data.forEach(infoData => {
+                                                            const row = document.createElement('tr');
+                                                            row.innerHTML = `
+                                                                    <td>${infoData.book_ref}</td>
+                                                                    <td>${infoData.book_date}</td>
+                                                                    <td>${infoData.total_amount}</td>
+                                                                    <td><button class="btn btn-warning btn-sm edit" id="bookEdit" data-booking="${infoData.book_ref}" >Editar
+                                                                    </button></td>
+                                                                    <td><button class="btn btn-danger btn-sm delete" id="bookDelete" data-booking="${infoData.book_ref}">
+                                                                        ELIMINAR
                                                                     </button></td>
                                                                 `;
-                                                    tbody.appendChild(row);
+                                                            tbodyBooking.appendChild(row);
+                                                        });
+                                                        console.log(data);
+                                                        moreData = true;
+                                                    })
+                                                    .catch(err => {
+                                                        console.error('Error al obtener las reservas', err);
+                                                    });
+                                            }
+                                            let containerBook = document.getElementById('tb');
+
+                                            containerBook.addEventListener('scroll', function (e) {
+                                                // 
+                                                // Es una resta
+                                                let scroll = containerBook.scrollHeight - containerBook.scrollTop - containerBook.clientHeight;
+
+                                                console.log('Scroll Total', containerBook.scrollHeight, 'Scroll Restante', scroll);
+
+                                                if (scroll <= 200 && moreData) {
+                                                    // funcion de vovler a cargar mas datos
+                                                    moreData = false;
+                                                    saltar += 50;
+                                                    console.log(saltar);
+                                                    tableBooking(saltar);
+                                                }
+
+                                            })
+                                            tableBooking();
+
+
+                                            // document.getElementsByClassName('booking-table').
+
+                                            document.querySelectorAll('.booking-table').forEach(element => {
+                                                element.addEventListener('click', function (e) {
+                                                    if (e.target.tagName == 'BUTTON' && e.target.classList.contains('delete')) {
+                                                        let id = e.target.dataset.booking;
+                                                        console.log(id);
+                                                        console.log('/delBooking/' + id);
+                                                        fetch('/delBooking/' + id, {
+                                                            method: 'delete',
+                                                        })
+                                                            .then(response => {
+                                                                if (!response.ok) {
+                                                                    throw new Error('Error al borrar la reserva: ' + response.statusText);
+                                                                }
+                                                                return response.json();
+                                                            })
+                                                            .then(() => {
+                                                                tableBooking(); // Actualizar la tabla después de eliminar el registro
+                                                                alert('La reserva ha sido eliminada correctamente.');
+
+                                                            })
+                                                            .catch(err => {
+                                                                console.error('Error al eliminar reserva', err);
+                                                                alert('Hay que eliminar primero el registro de los tickets');
+
+                                                            });
+                                                    } if (e.target.tagName === 'BUTTON' && e.target.classList.contains('edit')) {
+                                                        let r = document.getElementById('nReserva');
+                                                        let d = document.getElementById('oldDateBook');
+                                                        let t = document.getElementById('totalAmount');
+                                                        console.log(e.target.dataset.booking);
+                                                        let id = e.target.dataset.booking;
+                                                        fetch('/editBook/' + id)
+                                                            .then(resp => resp.json())
+                                                            .then(data => {
+                                                                // console.log(typeof data);
+                                                                // const keys = Object.keys(data);
+                                                                // console.log(keys);
+
+                                                                console.log("book_ref: " + data[0].book_ref);
+                                                                console.log("book_date: " + data[0].book_date);
+                                                                console.log("total_amount: " + data[0].total_amount);
+
+                                                                r.value = data[0].book_ref
+                                                                d.value = data[0].book_date
+                                                                t.value = data[0].total_amount
+
+                                                            })
+                                                            .catch(error => {
+                                                                console.error('Error al obtener la información:', error);
+                                                            });
+                                                    }
                                                 });
-                                                console.log(data);
-                                            })
-                                            .catch(err => {
-                                                console.error('Error al obtener los tickert', err);
-                                            })
-                                    }
+                                            });
 
-                                    tablaTicket();
+                                            document.getElementById('backButton').addEventListener('click', function (e) {
+                                                let boxEdit = document.getElementById('editBooking');
+                                                boxEdit.style.display = 'none';
+                                            });
 
-                                </script>
-                                <!-- [ stiped-table ] end -->
-                                <!-- [ Contextual-table ] start -->
 
-                                <!--  -->
+                                        </script>
+                                        <!-- TICKETS -->
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5>Información de los billetes</h5>
+                                                </div>
+                                                <div class="card-body table-border-style">
+                                                    <div class="table-responsive" id="tt">
+                                                        <table class="table table-striped" id="ticket-tabla">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Código de <br>reserva</th>
+                                                                    <th>Numero de <br>Ticket</th>
+                                                                    <th>Id del <br>pasajero</th>
+                                                                    <th>Nombre del <br>pasajero</th>
+                                                                    <th>Telefono <br>principal</th>
+                                                                    <th>Email<br> pasajero</th>
+                                                                    <th>Modificar</th>
+                                                                    <th>Eliminar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="infoTickets">
+                                                                <!--  -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- EDITAR RESERVAS -->
+                                        <div id="editTickets" class="editTickets" style="  position: fixed;
+                                                                                                top: 0;
+                                                                                                left: 0;
+                                                                                                width: 100%;
+                                                                                                height: 100%;
+                                                                                                background-color: rgba(0, 0, 0, 0.5); 
+                                                                                                z-index: 999999; 
+                                                                                               
+                                                                                                
+                                                                                                ">
+                                            <div style="  background-color: white;padding: 
+                                                                                    20px;
+                                                                                    border-radius: 5px;
+                                                                                    width: 30vw;
+                                                                                    height: auto;
+                                                                                    z-index: 1000000;
+                                                                                    position: relative;
+                                                                                    top: 5%;
+                                                                                    left: 40%;">
+                                                <div class="form-outline mb-4">
+                                                    <label class="form-label" for="emailPassenger">Email</label>
+                                                    <input type="email" id="emailPassenger" name="emailPassenger"
+                                                        class="form-control form-control-lg" readonly />
+                                                </div>
+                                                <form action=" /editTickets" method="post" id="formTicket">
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="nR">Número de
+                                                            reserva</label>
+                                                        <input type="text" id="nR" name="nR"
+                                                            class="form-control form-control-lg" autocomplete="off"
+                                                            list="sugerencias" readonly>
+                                                        <datalist id="sugerencias"></datalist>
+                                                    </div>
 
-                                <!-- [ Background-Utilities ] end -->
+                                                    <div class=" form-outline mb-4">
+                                                        <label for="nTicket" class="form-label">nº Ticket</label>
+                                                        <input name="nTicket" type="number" id="nTicket"
+                                                            class="form-control form-control-lg" />
+                                                    </div>
+
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="idPassenger">Id pasajero</label>
+                                                        <input type="text" id="idPassenger" name="idPassenger"
+                                                            class="form-control form-control-lg" />
+                                                    </div>
+
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="name">Nombre del pasajero</label>
+                                                        <input type="text" id="name" name="name"
+                                                            class="form-control form-control-lg" />
+                                                    </div>
+
+
+
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit"
+                                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Modificar</button>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center">
+                                                        <button id="backButtont" type="button"
+                                                            class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
+                                                            style="width:10vw ;">Atras</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            // todo: implement Mirar porque no se acet
+                                            document.querySelector('#formTicket').addEventListener('submit', function (event) {
+                                                event.preventDefault();
+                                                // Obtén los datos del formulario
+                                                const formData = new FormData(this);
+
+                                                fetch("/editTickets", {
+                                                    method: "PUT",
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                    },
+                                                    body: JSON.stringify(Object.fromEntries(formData)), // Convierte FormData a un objeto JSON
+                                                })
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            throw new Error('Error al actualizar el registro' + response.statusText)
+                                                        }
+                                                        return response.json();
+                                                    })
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            buscarReservas();
+                                                            alert("¡Reserva agregada exitosamente!");
+                                                        } else {
+                                                            // Si la operación falló, muestra el mensaje de error recibido del servidor
+                                                            alert(data.message);
+                                                        }
+                                                    })
+                                                    .catch(error => {
+
+                                                        console.error("Error al agregar reserva:", error);
+                                                        alert("Error interno del servidor. Por favor, inténtalo de nuevo más tarde.");
+                                                    });
+                                            });
+
+                                        </script>
+                                        <script>
+                                            // 
+                                            document.getElementById('infoTickets').addEventListener('click', function (e) {
+                                                // 
+                                                let boxEdit = document.getElementById('editTickets');
+                                                if (e.target.tagName == 'BUTTON' && e.target.classList.contains('edit')) {
+                                                    if (boxEdit.style.display === 'none' || boxEdit.style.display === '') {
+                                                        boxEdit.style.display = 'block'; // Cambia a display:block
+                                                    } else {
+                                                        boxEdit.style.display = 'none'; // Cambia a display:none
+                                                    }
+                                                }
+
+                                            });
+                                            document.getElementById('backButtont').addEventListener('click', function () {
+                                                let boxEdit = document.getElementById('editTickets');
+                                                boxEdit.style.display = 'none';
+                                            });
+
+                                        </script>
+                                        <script>
+                                            //
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                                function tablaTicket() {
+                                                    const tbody = document.getElementById("infoTickets");
+                                                    // tbody.innerHTML = '';
+
+                                                    fetch("/tickets")
+                                                        .then((resp) => resp.json())
+                                                        .then((data) => {
+                                                            tbody.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos registros
+                                                            data.forEach((infoData) => {
+                                                                const row = document.createElement("tr");
+                                                                row.innerHTML = `
+                                                            <td>${infoData.book_ref}</td>
+                                                            <td>${infoData.ticket_no}</td>
+                                                            <td>${infoData.passenger_id}</td>
+                                                            <td >${infoData.passenger_name}</td>
+                                                            <td>${infoData.telefono_1}</td>
+                                                            <td>${infoData.email}</td>
+                                                                    <td><button class="btn btn-warning btn-sm edit" id="ticketEdit" data-ticket="${infoData.ticket_no}" >Editar
+                                                                    </button></td>
+                                                            <td><button data-ticket="${infoData.ticket_no}" class="btn btn-danger btn-sm delete" id="delete">
+                                                            ELIMINAR
+                                                            </button></td>
+                                                            `;
+                                                                tbody.appendChild(row);
+                                                            });
+                                                            console.log(data);
+                                                        })
+                                                        .catch((err) => {
+                                                            console.error("Error al obtener los tickets", err);
+                                                        });
+                                                }
+
+                                                tablaTicket();
+
+                                                document.getElementById('ticket-tabla').addEventListener('click', async function (e) {
+                                                    if (e.target.tagName == 'BUTTON' && e.target.classList.contains('delete')) {
+                                                        let id = e.target.dataset.ticket;
+                                                        console.log(id);
+                                                        await fetch('/delTicket/' + id, {
+                                                            method: 'delete',
+                                                        });
+                                                        // Después de eliminar el registro, actualiza la tabla con la lista actualizada
+                                                        tablaTicket(); // Llama nuevamente a la función que carga la tabla para actualizarla
+                                                    } if (e.target.tagName === 'BUTTON' && e.target.classList.contains('edit')) {
+                                                        let n = document.getElementById('nR')
+                                                        let nt = document.getElementById('nTicket')
+                                                        let idP = document.getElementById('idPassenger')
+                                                        let nm = document.getElementById('name')
+                                                        let emP = document.getElementById('emailPassenger')
+
+                                                        let id = e.target.dataset.ticket;
+                                                        console.log(id);
+
+                                                        fetch('/editTicket/' + id)
+                                                            .then((resp) => resp.json())
+                                                            .then((data) => {
+                                                                // 
+                                                                let primeraInfoContacData = data[0].contact_data;
+                                                                const infoDataContact = primeraInfoContacData.email
+
+                                                                n.value = data[0].book_ref
+                                                                nt.value = data[0].ticket_no
+                                                                idP.value = data[0].passenger_id
+                                                                nm.value = data[0].passenger_name
+                                                                emP.value = data[0].infoDataContact
+                                                            })
+                                                    }
+                                                })
+                                            });
+                                        </script>
+                                        <script>
+
+                                            document.getElementById('tt').addEventListener('scroll', function (e) {
+                                                // 
+                                            });
+                                        </script>
+                                    </div>
+                                    <!-- [ Main Content ] end -->
+                                </div>
                             </div>
-                            <!-- [ Main Content ] end -->
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </section>
 
 
@@ -548,10 +969,6 @@
     <script src="./template_files/vendor-all.min.js.descarga"></script>
     <script src="./template_files/bootstrap.min.js.descarga"></script>
     <script src="./template_files/pcoded.min.js.descarga"></script>
-    <div class="fixed-button active"><a href="https://codedthemes.com/item/flash-able-bootstrap-admin-template/"
-            target="_blank" class="btn btn-md btn-primary"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            Upgrade To Pro</a> </div>
-
 
 
 

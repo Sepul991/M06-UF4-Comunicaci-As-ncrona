@@ -1,62 +1,26 @@
 import { Router } from "express";
 import { TicketsController } from "../controlador/TicketsController.js";
-import dbclient from "../ddbb/conexion.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const view = dirname(__filename);
 
 export const postRoutes = Router();
-// postRoutes.post("/add", async (req, res) => {
-//     try {
-//         // Verificar si hay datos en el cuerpo de la solicitud
-//         if (!req.body || Object.keys(req.body).length === 0) {
-//             console.log(req.body);
-//             return res.status(400).json({
-//                 message:
-//                     "No se han proporcionado datos en el cuerpo de la solicitud.",
-//             });
-//         }
-//         console.log(req.body);
-//         console.log(req.body.emailPassenger);
 
-//         const client = await dbclient();
-//         const { nTicket, nReserva, idPassenger, name } = req.body;
-//         const contactData = {
-//             emails: [req.body.emailPassenger],
-//         };
+postRoutes.post("/postBooking", TicketsController.add_bookings);
 
-//         // Realizar la inserción en la base de datos
-//         await client.query(
-//             "INSERT INTO tickets (ticket_no, book_ref, passenger_id, passenger_name, contact_data) VALUES ($1, $2, $3, $4, $5)",
-//             [nTicket, nReserva, idPassenger, name, contactData],
-//         );
+postRoutes.put("/postTicket", TicketsController.add_tickets);
 
-//         res.redirect("/");
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
+postRoutes.post("/editBooking", TicketsController.mod_bookings);
+
+postRoutes.put("/editTickets", TicketsController.mod_tickets);
+// postRoutes.post("/editTickets", (req, res) => {
+//     //
+//     console.log(req.body);
 // });
-postRoutes.post("/add", async (req, res) => {
-    try {
-        // Verificar si hay datos en el cuerpo de la solicitud
-        if (!req.body || Object.keys(req.body).length === 0) {
-            console.log(req.body);
-            return res.status(400).json({
-                message:
-                    "No se han proporcionado datos en el cuerpo de la solicitud.",
-            });
-        }
-        console.log(req.body);
-        console.log(req.body.emailPassenger);
 
-        const client = await dbclient();
-        const { nReserva, dateBook, totalAmount } = req.body;
-
-        // Realizar la inserción en la base de datos
-        await client.query(
-            "INSERT INTO bookings (book_ref, book_date, total_amount) VALUES ($1, $2, $3)",
-            [nReserva, dateBook, totalAmount],
-        );
-
-        res.redirect("/");
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// postRoutes.post("/editBooking", (req, res) => {
+//     //
+//     console.log(req.body);
+// });
